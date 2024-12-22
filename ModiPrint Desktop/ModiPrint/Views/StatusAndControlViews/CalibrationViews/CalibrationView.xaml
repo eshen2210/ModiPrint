@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="ModiPrint.Views.StatusAndControlViews.CalibrationViews.CalibrationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModiPrint.Views.StatusAndControlViews.CalibrationViews"
+             mc:Ignorable="d">
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Calibration"
+                   Style="{DynamicResource ThematicTextBlock}"/>
+
+        <Border Style="{DynamicResource ThematicButtonBorder}">
+            <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                      Path=DataContext.ManualControlViewModel.SetMenuCommand}"
+                    CommandParameter="Home"
+                    Style="{DynamicResource ThematicButton}"
+                    Height="{DynamicResource StandardImageButtonHeight}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal"
+                                    Background="Transparent">
+                            <Image Source="/Resources/Buttons/MoveToOrigin.png"
+                                   Height="{DynamicResource StandardImageButtonHeight}"
+                                   Style="{DynamicResource ThematicControlImage}"
+                                   Margin="0, 0, 0, 0"/>
+                            <StackPanel Orientation="Vertical"
+                                        VerticalAlignment="Center"
+                                        Width="{DynamicResource NarrowControlWidth}"
+                                        Margin="5, 5, 5, 5">
+                                <TextBlock Text="Home"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Margin="0, 0, 0, 0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.ToolTip>
+                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                        The following sequence will occur:
+                        <LineBreak/>
+                        1. Retract all Z actuators until the upper limit switches are hit. Z actuator min/max positions will not be recorded.
+                        <LineBreak/>
+                        2. Move X actuator to both upper and lower limit switches. Record min/max positions.
+                        <LineBreak/>
+                        3. Move Y actuator to both upper and lower limit switches. Record min/max positions.
+                        <LineBreak/>
+                        4. Move to the center of the XY stage with a specified offsets.
+                        <LineBreak/>
+                        5. Set that new position as the origin X and Y positions equal zero.
+                        <LineBreak/>
+                        Note that to calibrate all min/max positions and printhead offsets, you must use Set Printhead Offset for each printhead after using Find Limits.
+                    </TextBlock>
+                </Button.ToolTip>
+            </Button>
+        </Border>
+
+        <Border Style="{DynamicResource ThematicButtonBorder}">
+            <Button Command="{Binding CalibratePrintheadOffsetCommand}"
+                    Style="{DynamicResource ThematicButton}"
+                    Height="{DynamicResource StandardImageButtonHeight}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal"
+                                    Background="Transparent">
+                            <Image Source="/Resources/Buttons/SetPrintheadOffset.png"
+                                   Height="{DynamicResource StandardImageButtonHeight}"
+                                   Style="{DynamicResource ThematicControlImage}"
+                                   Margin="0, 0, 0, 0"/>
+                            <StackPanel Orientation="Vertical"
+                                        VerticalAlignment="Center"
+                                        Width="{DynamicResource NarrowControlWidth}"
+                                        Margin="5, 5, 5, 5">
+                                <TextBlock Text="Set"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Margin="0, 0, 0, 0"/>
+                                <TextBlock Text="Offset"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Margin="0, 0, 0, 0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.ToolTip>
+                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                        Set the offset values for the currently set printhead.
+                        <LineBreak/>
+                        To use this feature, you must perform the following:
+                        <LineBreak/>
+                        1. Install nozzles on each printhead as if printing is about to occur.
+                        <LineBreak/>
+                        2. Set a printhead (drop-down menu on the left).
+                        <LineBreak/>
+                        3. Move the ends of each nozzle precisely to a specific position in 3D space.
+                        <LineBreak/>
+                        4. Hit the Set Printhead Offset button.
+                        <LineBreak/>
+                        5. Repeat steps 3-5 for all printheads, manuevering them to the exact same position.
+                        <LineBreak/>
+                        Do not perform any other actions in between steps 2-5.
+                        <LineBreak/>
+                        In sum, these actions will set the min/max positions of the Z actuators and the offsets of the printheads.
+                        <LineBreak/>
+                        It is recommended to use the Save feature after calibration. Periodic calibration is recommended. 
+                    </TextBlock>
+                </Button.ToolTip>
+            </Button>
+        </Border>
+    </StackPanel>
+</UserControl>

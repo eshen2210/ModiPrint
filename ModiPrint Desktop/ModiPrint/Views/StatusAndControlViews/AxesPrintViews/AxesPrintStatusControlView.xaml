@@ -1,0 +1,1078 @@
+﻿<UserControl x:Class="ModiPrint.Views.StatusAndControlViews.AxesPrintViews.AxesPrintStatusControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModiPrint.Views.StatusAndControlViews"
+             xmlns:vControl="clr-namespace:ModiPrint.Views.ControlViews"
+             xmlns:mPrintheadType="clr-namespace:ModiPrint.Models.PrinterModels.PrintheadModels.PrintheadTypeModels"
+             xmlns:mRealTimeStatus="clr-namespace:ModiPrint.Models.RealTimeStatusModels"
+             xmlns:vmRealTimeStatusPrinthead="clr-namespace:ModiPrint.ViewModels.RealTimeStatusViewModels.RealTimeStatusPrintheadViewModels"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d">
+    <Grid>
+
+        <Viewbox Grid.Column="0"
+                 Stretch="Uniform">
+            <Grid>
+
+                <!--#region Background-->
+                <Grid DataContext="{Binding RealTimeStatusDataViewModel}">
+                    
+                    <!--X Background-->
+                    <Image Source="/Resources/XYZEControl/XBackground.png">
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding XRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+
+                    <!--Y Background-->
+                    <Image Source="/Resources/XYZEControl/YBackground.png">
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding YRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+
+                    <!--X Background-->
+                    <Image Source="/Resources/XYZEControl/ZBackground.png">
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ZRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+
+                    <!--E Background-->
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Resources/TransparentImage.png"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ActivePrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Motorized}">
+                                        <Setter Property="Source" Value="/Resources/XYZEControl/MotorizedPrintheadBackground.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ActivePrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Valve}">
+                                        <Setter Property="Source" Value="/Resources/XYZEControl/ValvePrintheadBackground.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Limit Display-->
+                <Grid DataContext="{Binding RealTimeStatusDataViewModel}">
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="/Views/GlobalResources.xaml"/>
+                            </ResourceDictionary.MergedDictionaries>
+
+                            <Style x:Key="LimitSwitchHitToolTipTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ThematicToolTipTextBlock}">
+                                <Setter Property="Text" Value="Limit Switch hit. Movement will not be permitted in the last travelled direction as that would damge hardware."/>
+                            </Style>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+
+                    <!--X Upper Limit-->
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Resources/XYZEControl/XYZELimits/XUpperLimit.png"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding XRealTimeStatusAxisViewModel.LimitSwitchStatus}" Value="{x:Static  mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                        <Image.ToolTip>
+                            <TextBlock Style="{StaticResource LimitSwitchHitToolTipTextBlock}"/>
+                        </Image.ToolTip>
+                    </Image>
+
+                    <!--X Lower Limit-->
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Resources/XYZEControl/XYZELimits/XLowerLimit.png"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding XRealTimeStatusAxisViewModel.LimitSwitchStatus}" Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                        <Image.ToolTip>
+                            <TextBlock Style="{StaticResource LimitSwitchHitToolTipTextBlock}"/>
+                        </Image.ToolTip>
+                    </Image>
+
+                    <!--Y Upper Limit-->
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Resources/XYZEControl/XYZELimits/YUpperLimit.png"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding YRealTimeStatusAxisViewModel.LimitSwitchStatus}" Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                        <Image.ToolTip>
+                            <TextBlock Style="{StaticResource LimitSwitchHitToolTipTextBlock}"/>
+                        </Image.ToolTip>
+                    </Image>
+
+                    <!--Y Lower Limit-->
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Resources/XYZEControl/XYZELimits/YLowerLimit.png"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding YRealTimeStatusAxisViewModel.LimitSwitchStatus}" Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                        <Image.ToolTip>
+                            <TextBlock Style="{StaticResource LimitSwitchHitToolTipTextBlock}"/>
+                        </Image.ToolTip>
+                    </Image>
+
+                    <!--Z Upper Limit-->
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Resources/XYZEControl/XYZELimits/ZUpperLimit.png"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ZRealTimeStatusAxisViewModel.LimitSwitchStatus}" Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                        <Image.ToolTip>
+                            <TextBlock Style="{StaticResource LimitSwitchHitToolTipTextBlock}"/>
+                        </Image.ToolTip>
+                    </Image>
+
+                    <!--Z Lower Limit-->
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Resources/XYZEControl/XYZELimits/ZLowerLimit.png"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ZRealTimeStatusAxisViewModel.LimitSwitchStatus}" Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                        <Image.ToolTip>
+                            <TextBlock Style="{StaticResource LimitSwitchHitToolTipTextBlock}"/>
+                        </Image.ToolTip>
+                    </Image>
+
+                    <!--E Upper Limit-->
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Resources/XYZEControl/XYZELimits/EUpperLimit.png"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ActivePrintheadViewModel.LimitSwitchStatus}" Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                        <Image.ToolTip>
+                            <TextBlock Style="{StaticResource LimitSwitchHitToolTipTextBlock}"/>
+                        </Image.ToolTip>
+                    </Image>
+
+                    <!--E Lower Limit-->
+                    <Image>
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Source" Value="/Resources/XYZEControl/XYZELimits/ELowerLimit.png"/>
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ActivePrintheadViewModel.LimitSwitchStatus}" Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                        <Image.ToolTip>
+                            <TextBlock Style="{StaticResource LimitSwitchHitToolTipTextBlock}"/>
+                        </Image.ToolTip>
+                    </Image>
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region XYZE and Valve Data Display-->
+                <Grid DataContext="{Binding RealTimeStatusDataViewModel}">
+                    <Grid.RowDefinitions>
+                        <!--Space at the same height as YZE-->
+                        <RowDefinition Height="4.5*"/>
+                        <!--Space above X-->
+                        <RowDefinition Height="10*"/>
+                        <!--Space at the same height and below X-->
+                        <RowDefinition Height="15.3*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <!--Space to the left of Y-->
+                        <ColumnDefinition Width="14.1*"/>
+                        <!--Space to the left of Z-->
+                        <ColumnDefinition Width="11.8*"/>
+                        <!--Space to the left of E-->
+                        <ColumnDefinition Width="12*"/>
+                        <!--Space to the right of E-->
+                        <ColumnDefinition Width="8*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style x:Key="DataDisplayTextBlock" TargetType="{x:Type TextBlock}">
+                            <Setter Property="FontSize" Value="140"/>
+                            <Setter Property="FontFamily" Value="Calibri"/>
+                            <Setter Property="FontWeight" Value="UltraBold"/>
+                        </Style>
+
+                        <Style x:Key="DataDisplayStackPanel" TargetType="{x:Type StackPanel}">
+                            <Setter Property="Height" Value="150"/>
+                        </Style>
+                    </Grid.Resources>
+                    
+                    <!--#region X Data Display-->
+                    <StackPanel Grid.Row="1" Grid.Column="0"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding XRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <!--Position-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/Position.png"/>
+                            <TextBlock Text="{Binding XRealTimeStatusAxisViewModel.Position, StringFormat=N2}"
+                                       Foreground="Aqua"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Position of this actuator relative to the origin.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                        <!--Max Speed-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/MaxSpeed.png"/>
+                            <TextBlock Text="{Binding XRealTimeStatusAxisViewModel.MaxSpeed, StringFormat=N0}"
+                                       Foreground="Aqua"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Maximum speed set on this actuator.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                        <!--Acceleration-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/Acceleration.png"/>
+                            <TextBlock Text="{Binding XRealTimeStatusAxisViewModel.Acceleration, StringFormat=N0}"
+                                       Foreground="Aqua"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Acceleration set on this actuator.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                    </StackPanel>
+                   <!--#endregion-->
+                    
+                    <!--#region Y Data Display-->
+                    <StackPanel Grid.Row="0" Grid.Column="0"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding YRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <!--Position-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/Position.png"/>
+                            <TextBlock Text="{Binding YRealTimeStatusAxisViewModel.Position, StringFormat=N2}"
+                                       Foreground="Red"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Position of this actuator relative to the origin.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                        <!--Max Speed-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/MaxSpeed.png"/>
+                            <TextBlock Text="{Binding YRealTimeStatusAxisViewModel.MaxSpeed, StringFormat=N0}"
+                                       Foreground="Red"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Maximum speed set on this actuator.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                        <!--Acceleration-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/Acceleration.png"/>
+                            <TextBlock Text="{Binding YRealTimeStatusAxisViewModel.Acceleration, StringFormat=N0}"
+                                       Foreground="Red"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Acceleration set on this actuator.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                    </StackPanel>
+                    <!--#endregion-->
+                    
+                    <!--#region Z Data Display-->
+                    <StackPanel Grid.Row="0" Grid.Column="1"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ZRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <!--Position-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/Position.png"/>
+                            <TextBlock Text="{Binding ZRealTimeStatusAxisViewModel.Position, StringFormat=N2}"
+                                       Foreground="MediumPurple"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Position of this actuator relative to the origin.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                        <!--Max Speed-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/MaxSpeed.png"/>
+                            <TextBlock Text="{Binding ZRealTimeStatusAxisViewModel.MaxSpeed, StringFormat=N0}"
+                                       Foreground="MediumPurple"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Maximum speed set on this actuator.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                        <!--Acceleration-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/Acceleration.png"/>
+                            <TextBlock Text="{Binding ZRealTimeStatusAxisViewModel.Acceleration, StringFormat=N0}"
+                                       Foreground="MediumPurple"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Acceleration set on this actuator.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                    </StackPanel>
+                    <!--#endregion-->
+                    
+                    <!--#region E Data Display-->
+                    <StackPanel Grid.Row="0" Grid.Column="2"
+                                Orientation="Vertical"
+                                HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ActivePrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Motorized}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+
+                        <!--Position-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/Position.png"/>
+                            <TextBlock Text="{Binding ActivePrintheadViewModel.Position, StringFormat=N2}"
+                                       Foreground="SeaGreen"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Position of this actuator relative to the origin.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                        <!--Max Speed-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/MaxSpeed.png"/>
+                            <TextBlock Text="{Binding ActivePrintheadViewModel.MaxSpeed, StringFormat=N0}"
+                                       Foreground="SeaGreen"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Maximum speed set on this actuator.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                        <!--Acceleration-->
+                        <StackPanel Orientation="Horizontal"
+                                    Style="{StaticResource DataDisplayStackPanel}">
+                            <Image Source="/Resources/General/Acceleration.png"/>
+                            <TextBlock Text="{Binding ActivePrintheadViewModel.Acceleration, StringFormat=N0}"
+                                       Foreground="SeaGreen"
+                                       Style="{StaticResource DataDisplayTextBlock}"/>
+                            <StackPanel.ToolTip>
+                                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                    Acceleration set on this actuator.
+                                </TextBlock>
+                            </StackPanel.ToolTip>
+                        </StackPanel>
+                    </StackPanel>
+                    <!--#endregion-->
+                    
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Manual Move Buttons-->
+                <Grid DataContext="{Binding ManualControlViewModel}">
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="/Views/GlobalResources.xaml"/>
+                            </ResourceDictionary.MergedDictionaries>
+
+                            <Style x:Key="ManualMoveToolTipTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ThematicToolTipTextBlock}">
+                                <Setter Property="Text" Value="Move or print in the indicated direction."/>
+                            </Style>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+                    
+                    <!--Manual Move X- -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="X-">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/XMinus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.Name}" 
+                                                 Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XMinusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XMinus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Manual Move X+ -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="X+">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/XPlus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XPlusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XPlus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Manual Move Y- -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="Y-">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/YMinus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/YMinusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/YMinus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Manual Move Y+ -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="Y+">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/YPlus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/YPlusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/YPlus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Manual Move Z- -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="Z-">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/ZMinus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.ZRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.ZRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/ZMinusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/ZMinus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Manual Move Z+ -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="Z+">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/ZPlus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.ZRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.ZRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/ZPlusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/ZPlus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Manual Move X+ Y+ -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="X+Y+">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/XPlusYPlus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XPlusYPlusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XPlusYPlus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Manual Move X- Y+ -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="X-Y+">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/XMinusYPlus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XMinusYPlusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XMinusYPlus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Manual Move X- Y- -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="X-Y-">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/XMinusYMinus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XMinusYMinusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XMinusYMinus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Manual Move X+ Y- -->
+                    <Button Command="{Binding SetMenuCommand}"
+                            CommandParameter="X+Y-">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/XPlusYMinus.png"/>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.XRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.UpperLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.Name}" Value="Unset">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.YRealTimeStatusAxisViewModel.LimitSwitchStatus}" 
+                                                 Value="{x:Static mRealTimeStatus:LimitSwitchStatus.LowerLimit}">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XPlusYMinusMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/XYZEControl/XPlusYMinus.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{StaticResource ManualMoveToolTipTextBlock}"/>
+                        </Button.ToolTip>
+                    </Button>
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Manual Printhead Buttons-->
+                <Grid DataContext="{Binding ManualControlViewModel}">
+
+                    <Grid.Resources>
+                        
+                        <!--#region Unset Data Template-->
+                        <DataTemplate x:Key="UnsetDataTemplate">
+                            <Grid/>
+                        </DataTemplate>
+                        <!--#endregion-->
+                        
+                        <!--#region Manual Move E-->
+                        <DataTemplate x:Key="ManualMoveE">
+                            <Grid>
+                                <!--Manual Move E- -->
+                                <Button Command="{Binding SetMenuCommand}"
+                                        CommandParameter="E-">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/EMinus.png"/>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter TargetName="Image" Property="Source"
+                                                                        Value="/Resources/XYZEControl/EMinusMouseOver.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="true">
+                                                                <Setter TargetName="Image" Property="Source"
+                                                                        Value="/Resources/XYZEControl/EMinus.png"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                    <Button.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            Retract the motorized printhead.
+                                        </TextBlock>
+                                    </Button.ToolTip>
+                                </Button>
+
+                                <!--Manual Move E+ -->
+                                <Button Command="{Binding SetMenuCommand}"
+                                        CommandParameter="E+">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/EPlus.png"/>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter TargetName="Image" Property="Source"
+                                                                        Value="/Resources/XYZEControl/EPlusMouseOver.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="true">
+                                                                <Setter TargetName="Image" Property="Source"
+                                                                        Value="/Resources/XYZEControl/EPlus.png"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                    <Button.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            Dispense with the motorized printhead.
+                                        </TextBlock>
+                                    </Button.ToolTip>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                        <!--#endregion-->
+                        
+                        <!--#region Manual Valve-->
+
+                        <!--Manual Valve Open-->
+                        <DataTemplate x:Key="ManualValveOpen">
+                            <Grid>
+                                <Button Command="{Binding SetMenuCommand}"
+                                        CommandParameter="V">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/ValveOpen.png"/>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter TargetName="Image" Property="Source"
+                                                                        Value="/Resources/XYZEControl/ValveOpenMouseOver.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="true">
+                                                                <Setter TargetName="Image" Property="Source"
+                                                                        Value="/Resources/XYZEControl/ValveOpen.png"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                    <Button.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            Dispense with the valve printhead.
+                                        </TextBlock>
+                                    </Button.ToolTip>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                        
+                        <!--Manual Valve Close-->
+                        <DataTemplate x:Key="ManualValveClose">
+                            <Grid>
+                                <Button Command="{Binding ManualValveCloseCommand}">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/XYZEControl/ValveClose.png"/>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="true">
+                                                                <Setter TargetName="Image" Property="Source"
+                                                                        Value="/Resources/XYZEControl/ValveCloseMouseOver.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="true">
+                                                                <Setter TargetName="Image" Property="Source"
+                                                                        Value="/Resources/XYZEControl/ValveClose.png"/>
+                                                            </Trigger>
+
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                    <Button.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            Stop dispensing with the valve printhead.
+                                        </TextBlock>
+                                    </Button.ToolTip>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                        
+                        <!--#endregion-->
+                        
+                    </Grid.Resources>
+
+                    <!--#region Printhead Status and Control-->
+                    <ContentControl Content="{Binding }">
+                        <ContentControl.Style>
+                            <Style TargetType="{x:Type ContentControl}">
+                                <Setter Property="ContentTemplate" Value="{StaticResource UnsetDataTemplate}"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                         Path=DataContext.RealTimeStatusDataViewModel.ActivePrintheadType}" 
+                                                       Value="{x:Static mPrintheadType:PrintheadType.Valve}"/>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                         Path=DataContext.RealTimeStatusDataViewModel.ActivePrintheadViewModel.IsValveOn}"
+                                                       Value="false"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="ContentTemplate" Value="{StaticResource ManualValveOpen}"/>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                         Path=DataContext.RealTimeStatusDataViewModel.ActivePrintheadType}" 
+                                                       Value="{x:Static mPrintheadType:PrintheadType.Valve}"/>
+                                            <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                         Path=DataContext.RealTimeStatusDataViewModel.ActivePrintheadViewModel.IsValveOn}"
+                                                       Value="true"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="ContentTemplate" Value="{StaticResource ManualValveClose}"/>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                                   Path=DataContext.RealTimeStatusDataViewModel.ActivePrintheadType}" 
+                                                 Value="{x:Static mPrintheadType:PrintheadType.Motorized}">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource ManualMoveE}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+                    <!--#endregion-->
+                    
+                </Grid>
+                <!--#endregion-->
+
+            </Grid>
+        </Viewbox>
+
+    </Grid>
+</UserControl>

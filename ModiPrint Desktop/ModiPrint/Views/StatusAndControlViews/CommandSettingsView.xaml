@@ -1,0 +1,224 @@
+﻿<UserControl x:Class="ModiPrint.Views.StatusAndControlViews.CommandSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModiPrint.Views.StatusAndControlViews"
+             xmlns:vControl="clr-namespace:ModiPrint.Views.ControlViews"
+             xmlns:vAxesPrintSettings="clr-namespace:ModiPrint.Views.StatusAndControlViews.AxesPrintViews.AxesPrintSettingsViews"
+             xmlns:vEquipmentSelectionSettings="clr-namespace:ModiPrint.Views.StatusAndControlViews.EquipmentSelectionViews.EquipmentSelectionSettingsViews"
+             xmlns:vCalibration="clr-namespace:ModiPrint.Views.StatusAndControlViews.CalibrationViews"
+             mc:Ignorable="d">
+
+    <Grid>
+
+        <!--Settings Menu Content-->
+        <Grid>
+            <Grid.Resources>
+
+                <!--#region Settings Templates-->
+                <DataTemplate x:Key="UnsetSettings">
+
+                </DataTemplate>
+
+                <DataTemplate x:Key="SetAxisSettings">
+                    <vEquipmentSelectionSettings:SetAxis
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+                
+                <DataTemplate x:Key="SetMotorizedPrintheadSettings">
+                    <vEquipmentSelectionSettings:SetMotorizedPrinthead
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+                
+                <DataTemplate x:Key="SetValvePrintheadSettings">
+                    <vEquipmentSelectionSettings:SetValvePrinthead
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="HomeSettings">
+                    <vCalibration:HomeSettings
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="XPlusSettings">
+                    <vAxesPrintSettings:XPlus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="XMinusSettings">
+                    <vAxesPrintSettings:XMinus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="YPlusSettings">
+                    <vAxesPrintSettings:YPlus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="YMinusSettings">
+                    <vAxesPrintSettings:YMinus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="ZPlusSettings">
+                    <vAxesPrintSettings:ZPlus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="ZMinusSettings">
+                    <vAxesPrintSettings:ZMinus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="XPlusYPlusSettings">
+                    <vAxesPrintSettings:XPlusYPlus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="XMinusYPlusSettings">
+                    <vAxesPrintSettings:XMinusYPlus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="XMinusYMinusSettings">
+                    <vAxesPrintSettings:XMinusYMinus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="XPlusYMinusSettings">
+                    <vAxesPrintSettings:XPlusYMinus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="EPlusSettings">
+                    <vAxesPrintSettings:EPlus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="EMinusSettings">
+                    <vAxesPrintSettings:EMinus
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <DataTemplate x:Key="ValveOpenSettings">
+                    <vAxesPrintSettings:ValveOpen
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+                <!--#endregion-->
+
+            </Grid.Resources>
+
+            <!--#region Settings Display-->
+            <ContentControl Content="{Binding }">
+                <ContentControl.Style>
+                    <Style TargetType="{x:Type ContentControl}">
+                        <Setter Property="ContentTemplate" Value="{StaticResource UnsetSettings}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Menu}" Value="SetAxis">
+                                <Setter Property="ContentTemplate" Value="{StaticResource SetAxisSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="SetMotorized">
+                                <Setter Property="ContentTemplate" Value="{StaticResource SetMotorizedPrintheadSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="SetValve">
+                                <Setter Property="ContentTemplate" Value="{StaticResource SetValvePrintheadSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="Home">
+                                <Setter Property="ContentTemplate" Value="{StaticResource HomeSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="X+">
+                                <Setter Property="ContentTemplate" Value="{StaticResource XPlusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="X-">
+                                <Setter Property="ContentTemplate" Value="{StaticResource XMinusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="Y+">
+                                <Setter Property="ContentTemplate" Value="{StaticResource YPlusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="Y-">
+                                <Setter Property="ContentTemplate" Value="{StaticResource YMinusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="Z+">
+                                <Setter Property="ContentTemplate" Value="{StaticResource ZPlusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="Z-">
+                                <Setter Property="ContentTemplate" Value="{StaticResource ZMinusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="X+Y+">
+                                <Setter Property="ContentTemplate" Value="{StaticResource XPlusYPlusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="X-Y+">
+                                <Setter Property="ContentTemplate" Value="{StaticResource XMinusYPlusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="X-Y-">
+                                <Setter Property="ContentTemplate" Value="{StaticResource XMinusYMinusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="X+Y-">
+                                <Setter Property="ContentTemplate" Value="{StaticResource XPlusYMinusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="E+">
+                                <Setter Property="ContentTemplate" Value="{StaticResource EPlusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="E-">
+                                <Setter Property="ContentTemplate" Value="{StaticResource EMinusSettings}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Menu}" Value="V">
+                                <Setter Property="ContentTemplate" Value="{StaticResource ValveOpenSettings}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <!--#endregion-->
+
+        </Grid>
+        <!--#endregion-->
+
+        <!--Back Button-->
+        <Button Command="{Binding SetMenuCommand}"
+                CommandParameter="Base"
+                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                Height="{DynamicResource StandardImageButtonHeight}">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/Buttons/Back.png"
+                                                   Style="{DynamicResource ThematicControlImage}"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Image" Property="Source"
+                                    Value="/Resources/Buttons/BackMouseOver.png"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Image" Property="Source"
+                                    Value="/Resources/Buttons/Back.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+            <Button.ToolTip>
+                <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                    Return to the previous menu.
+                </TextBlock>
+            </Button.ToolTip>
+        </Button>
+
+    </Grid>
+</UserControl>

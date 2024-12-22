@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="ModiPrint.Views.PrintViews.PrintView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModiPrint.Views.PrintViews"
+             xmlns:mGCode="clr-namespace:ModiPrint.Models.GCodeModels"
+             xmlns:vGCodeManager="clr-namespace:ModiPrint.Views.PrintViews.GCodeManagerViews"
+             xmlns:vMaterial="clr-namespace:ModiPrint.Views.PrintViews.MaterialViews"
+             mc:Ignorable="d">
+
+
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden"
+                  Style="{DynamicResource ThematicScrollViewer}">
+        <StackPanel Orientation="Vertical">
+            
+            <vGCodeManager:GCodeManagerView
+                Grid.Row="1"
+                DataContext="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                      AncestorLevel=1,
+                                      AncestorType={x:Type UserControl}}, 
+                                      Path=DataContext.GCodeManagerViewModel}"/>
+
+            <vMaterial:MaterialView
+                DataContext="{Binding PrintViewModel}"
+                Margin="10, 10, 10, 10">
+                <UserControl.Style>
+                    <Style TargetType="{x:Type UserControl}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                           AncestorLevel=1,
+                                                           AncestorType={x:Type UserControl}}, 
+                                                           Path=DataContext.GCodeManagerViewModel.UploadedGCodeType}"
+                                         Value="{x:Static mGCode:GCodeType.ModiPrint}">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </UserControl.Style>
+            </vMaterial:MaterialView>
+
+            <TextBlock Text=".mdpt files do not require material settings."
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontFamily="Serif"
+                       FontSize="22"
+                       Foreground="{DynamicResource StandardForeground}">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                           AncestorLevel=1,
+                                                           AncestorType={x:Type UserControl}}, 
+                                                           Path=DataContext.GCodeManagerViewModel.UploadedGCodeType}"
+                                         Value="{x:Static mGCode:GCodeType.ModiPrint}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>    
+            </TextBlock>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

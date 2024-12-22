@@ -1,0 +1,555 @@
+﻿<UserControl x:Class="ModiPrint.Views.PrintViews.MaterialViews.MaterialView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:local="clr-namespace:ModiPrint.Views.PrintViews.MaterialViews"
+             xmlns:vm="clr-namespace:ModiPrint.ViewModels"
+             xmlns:v="clr-namespace:ModiPrint.Views"
+             xmlns:vc="clr-namespace:ModiPrint.Utilities.IValueConverters"
+             xmlns:mPrintheadType="clr-namespace:ModiPrint.Models.PrinterModels.PrintheadModels.PrintheadTypeModels"
+             xmlns:mPrintStyle="clr-namespace:ModiPrint.Models.PrintModels.PrintStyleModels"
+             xmlns:vmPrintStyle="clr-namespace:ModiPrint.ViewModels.PrintViewModels.PrintStyleViewModels"
+             xmlns:vPrintStyle="clr-namespace:ModiPrint.Views.PrintViews.PrintStyleViews"
+             xmlns:vContinuousPrintStyle="clr-namespace:ModiPrint.Views.PrintViews.PrintStyleViews.ContinuousPrintStyles"
+             xmlns:vDropletPrintStyle="clr-namespace:ModiPrint.Views.PrintViews.PrintStyleViews.DropletPrintStyles"
+             xmlns:vControl="clr-namespace:ModiPrint.Views.ControlViews"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical">
+            
+        <!--#region Add Material Button-->
+        <Border Style="{DynamicResource ThematicButtonBorder}"
+                HorizontalAlignment="Right">
+            <Button Command="{Binding AddMaterialCommand}"
+                    Style="{DynamicResource ThematicButton}"
+                    Height="{DynamicResource StandardImageButtonHeight}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal"
+                                    Background="Transparent">
+                            <Image Source="/Resources/Buttons/AddMaterial.png"
+                                   Height="{DynamicResource StandardImageButtonHeight}"
+                                   Style="{DynamicResource ThematicControlImage}"
+                                   Margin="0, 0, 0, 0"/>
+                            <StackPanel Orientation="Vertical"
+                                        VerticalAlignment="Center"
+                                        Margin="5, 5, 5, 5">
+                                <TextBlock Text="Add"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Margin="0, 0, 0, 0"/>
+                                <TextBlock Text="Material"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Margin="0, 0, 0, 0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.ToolTip>
+                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                        Add a new print material.
+                        <LineBreak/>
+                        Each new material represents a different set of print parameters that may use different printheads, speeds, and styles to execute toolpaths.
+                        <LineBreak/>
+                        Be sure to set parameters for this new and any existing materials before operation.
+                    </TextBlock>
+                </Button.ToolTip>
+            </Button>
+        </Border>
+        <!--#endregion-->
+        
+        <TabControl Name="MaterialTabControl"
+                    ItemsSource="{Binding MaterialViewModelList}"
+                    Style="{DynamicResource ThematicTabControl}"
+                    SelectionChanged="MaterialTabControl_SelectionChanged">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                Height="{DynamicResource StandardControlHeight}">
+                        <Image Source="/Resources/General/Material.png"
+                               Width="{DynamicResource NarrowControlWidth}"
+                               Margin="0, 0, 0, 0"/>
+                        <TextBlock Text="{Binding Name}"
+                                   VerticalAlignment="Center"
+                                   Style="{DynamicResource ThematicTabControlTextBlock}"
+                                   Margin="0, 0, 0, 0"/>
+                    </StackPanel>
+                    
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+
+                        <!--#region RepRap ID-->
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"
+                                        Height="{DynamicResource StandardControlHeight}">
+                                <Image Source="/Resources/General/TextFile.png"
+                                       Style="{DynamicResource ThematicControlImage}"
+                                       Width="{DynamicResource NarrowControlWidth}"/>
+                                <TextBlock Text="G-code ID" 
+                                           Width="{DynamicResource StandardControlWidth}"
+                                           Style="{DynamicResource ThematicTextBlock}"/>
+                            </StackPanel>
+                            <ComboBox ItemsSource="{Binding AvailibleRepRapIDList}"
+                                      SelectedValue="{Binding RepRapID, Mode=TwoWay}"
+                                      Height="{DynamicResource StandardControlHeight}"    
+                                      Width="{DynamicResource WideControlWidth}"
+                                      Style="{DynamicResource ThematicComboBox}">
+                                <ComboBox.ToolTip>
+                                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                        The RepRap T command that's associated with this material.
+                                        <LineBreak/>
+                                        These identifiers come in the form of T0, T1, T2...etc.
+                                        <LineBreak/>
+                                        Upon reading this T# in a g-code line, the printer will switch to this Material and its parameters to execute the upcoming toolpaths.
+                                        <LineBreak/>
+                                        If this list is not populated, then uploade a .gcode file first.
+                                    </TextBlock>
+                                </ComboBox.ToolTip>
+                            </ComboBox>
+
+                            <Button Command="{Binding ClearRepRapIDCommand}"
+                                    CommandParameter="AttachedMotorStepGPIOPinViewModel"
+                                    Height="{DynamicResource StandardControlHeight}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/ImageButtons/Clear.png"/>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter TargetName="Image" Property="Source"
+                                                        Value="/Resources/ImageButtons/ClearMouseOver.png"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="true">
+                                                <Setter TargetName="Image" Property="Source"
+                                                        Value="/Resources/ImageButtons/Clear.png"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+                        <!--#endregion-->
+
+                        <!--#region Associated Printhead-->
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"
+                                        Height="{DynamicResource StandardControlHeight}">
+                                <Image Source="/Resources/General/Printhead.png"
+                                       Style="{DynamicResource ThematicControlImage}"
+                                       Width="{DynamicResource NarrowControlWidth}"/>
+                                <TextBlock Text="Printhead" 
+                                           Width="{DynamicResource StandardControlWidth}"
+                                           Style="{DynamicResource ThematicTextBlock}"/>
+                            </StackPanel>
+
+                            <ComboBox DisplayMemberPath="Name"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}, AncestorLevel=2}, 
+                                                            Path=DataContext.PrinterViewModel.PrintheadViewModelList}"
+                                      SelectedValue="{Binding PrintheadViewModel}"
+                                      Height="{DynamicResource StandardControlHeight}" Width="{DynamicResource WideControlWidth}"
+                                      Style="{DynamicResource ThematicComboBox}">
+                                <ComboBox.ToolTip>
+                                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                        The printhead that is used with this material.
+                                        <LineBreak/>
+                                        The printhead and its parameters should be set before this parameter is set.
+                                    </TextBlock>
+                                </ComboBox.ToolTip>
+                            </ComboBox>
+                        </StackPanel>
+                        <!--#endregion-->
+
+                        <!--#region Toggle PauseAfterActivating/Deactivating-->
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Height="{DynamicResource StandardControlHeight}">
+
+                            <TextBlock Width="{DynamicResource NarrowControlWidth}"/>
+                            <TextBlock Text="Pause After Activating      "
+                                       Style="{DynamicResource ThematicTextBlock}"/>
+                            <Grid>
+                                <Grid.Resources>
+                                    <ResourceDictionary>
+                                        <ResourceDictionary.MergedDictionaries>
+                                            <ResourceDictionary Source="/Views/GlobalResources.xaml"/>
+                                        </ResourceDictionary.MergedDictionaries>
+
+                                        <Style x:Key="ThematicPauseAfterActivatingTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ThematicTextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=tgbtnPauseAfterActivating, Path=IsChecked}" Value="False">
+                                                    <Setter Property="Text" Value="False"/>
+                                                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=tgbtnPauseAfterActivating, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="True"/>
+                                                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+
+                                    </ResourceDictionary>
+                                </Grid.Resources>
+
+                                <ToggleButton Name="tgbtnPauseAfterActivating"
+                                              IsChecked="{Binding Path=PauseAfterActivating}"
+                                              Style="{DynamicResource ThematicToggleButton}"
+                                              Width="{DynamicResource StandardToggleButtonWidth}">
+                                    <ToggleButton.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            Pause a print sequence after switching to this material.
+                                            <LineBreak/>
+                                            This allows you to manually execute commands under the Control menu before the print sequence continues.
+                                            <LineBreak/>
+                                            This was mainly implemented to unclog printheads after switching printheads.
+                                        </TextBlock>
+                                    </ToggleButton.ToolTip>
+                                </ToggleButton>
+                                <TextBlock Style="{StaticResource ThematicPauseAfterActivatingTextBlock}"
+                                           IsHitTestVisible="False"
+                                           Width="{DynamicResource NarrowControlWidth}"/>
+                            </Grid>
+                        </StackPanel>
+                        <!--#endregion-->
+
+                        <!--#region Toggle PauseBeforeDeactivating-->
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Height="{DynamicResource StandardControlHeight}">
+
+                            <TextBlock Width="{DynamicResource NarrowControlWidth}"/>
+                            <TextBlock Text="Pause Before Deactivating"
+                                       Style="{DynamicResource ThematicTextBlock}"/>
+                            <Grid>
+                                <Grid.Resources>
+                                    <ResourceDictionary>
+                                        <ResourceDictionary.MergedDictionaries>
+                                            <ResourceDictionary Source="/Views/GlobalResources.xaml"/>
+                                        </ResourceDictionary.MergedDictionaries>
+
+                                        <Style x:Key="ThematicPauseBeforeDeactivatingTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ThematicTextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=tgbtnPauseBeforeDeactivating, Path=IsChecked}" Value="False">
+                                                    <Setter Property="Text" Value="False"/>
+                                                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=tgbtnPauseBeforeDeactivating, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="True"/>
+                                                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+
+                                    </ResourceDictionary>
+                                </Grid.Resources>
+
+                                <ToggleButton Name="tgbtnPauseBeforeDeactivating"
+                                              IsChecked="{Binding Path=PauseBeforeDeactivating}"
+                                              Style="{DynamicResource ThematicToggleButton}"
+                                              Width="{DynamicResource StandardToggleButtonWidth}">
+                                    <ToggleButton.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            Pause a print sequence after switching from this material.
+                                            <LineBreak/>
+                                            This allows you to manually execute commands under the Control menu before the print sequence continues.
+                                            <LineBreak/>
+                                            This was mainly implemented to unclog printheads before switching printheads.
+                                        </TextBlock>
+                                    </ToggleButton.ToolTip>
+                                </ToggleButton>
+                                <TextBlock Style="{StaticResource ThematicPauseBeforeDeactivatingTextBlock}"
+                                           IsHitTestVisible="False"
+                                           Width="{DynamicResource NarrowControlWidth}"/>
+                            </Grid>
+                        </StackPanel>
+                        <!--#endregion-->
+
+                        <!--#region Print Speed and Acceleration-->
+                        <StackPanel Orientation="Vertical">
+
+                            <!--#region Junction Deviation-->
+                            <StackPanel Orientation="Horizontal"
+                                        Height="{DynamicResource StandardControlHeight}">
+                                <Image Source="/Resources/General/JunctionDeviation.png" 
+                                       Style="{DynamicResource ThematicControlImage}"
+                                       Width="{DynamicResource NarrowControlWidth}"/>
+                                <TextBlock Text="Junction Dev."
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Width="{DynamicResource StandardControlWidth}"/>
+                                <TextBox Text="{Binding Path=JunctionDeviation, Mode=TwoWay}"
+                                         Style="{DynamicResource ThematicTextBox}"
+                                         Width="{DynamicResource WideControlWidth}">
+                                    <TextBox.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            Junction deviation determines the centripetal acceleration of the XYZ stage allowing actuators to skip the initial stages of acceleration.
+                                            <LineBreak/>
+                                            Must be set to a value between 0 and 1. Where 0 has each line segment start at zero velocity.
+                                            <LineBreak/>
+                                            A higher junction deviation enables faster cornering with more constant speeds. 
+                                            <LineBreak/>
+                                            Therefore, a higher junction deviation is beneficial for faster operation and better maintains a consistent filament diameter during continuous extrusion printing.
+                                            <LineBreak/>
+                                            This parameter should be set as high as possible as long as the XYZ stage frame is stiff enough to handle the jerk.
+                                            <LineBreak/> 
+                                            A junction deviation that is too high will result in inaccurate prints.
+                                            <LineBreak/>
+                                            The recommended setting for ModiPrint hardware is 0.01.
+                                        </TextBlock>
+                                    </TextBox.ToolTip>
+                                </TextBox>
+                            </StackPanel>
+                            <!--#endregion-->
+
+                            <!--#region XY Axis-->
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal"
+                                            Height="{DynamicResource StandardControlHeight}">
+                                    <Image Source="/Resources/General/MaxSpeed.png"
+                                           Style="{DynamicResource ThematicControlImage}"
+                                           Width="{DynamicResource NarrowControlWidth}"/>
+                                    <TextBlock Text="XY Print Speed"
+                                               Width="{DynamicResource StandardControlWidth}"
+                                               Style="{DynamicResource ThematicTextBlock}"/>
+                                    <TextBox Text="{Binding Path=XYPrintSpeed, Mode=TwoWay}"
+                                             Width="{DynamicResource WideControlWidth}" 
+                                             Style="{DynamicResource ThematicTextBox}">
+                                        <TextBox.ToolTip>
+                                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            Speed at which the actuator will move during printing.
+                                            <LineBreak/>
+                                            Higher speeds will reduce operation time.
+                                            <LineBreak/>
+                                            For continuous extrusion printing, higher print speeds will decrease filament diameter.
+                                            </TextBlock>
+                                        </TextBox.ToolTip>
+                                    </TextBox>
+                                    <TextBlock Text="mm/s"
+                                               Width="{DynamicResource NarrowControlWidth}" 
+                                               Style="{DynamicResource ThematicTextBlock}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                            Height="{DynamicResource StandardControlHeight}">
+                                    <Image Source="/Resources/General/Acceleration.png"
+                                           Style="{DynamicResource ThematicControlImage}"
+                                           Width="{DynamicResource NarrowControlWidth}"/>
+                                    <TextBlock Text="XY Acceleration"
+                                               Width="{DynamicResource StandardControlWidth}" 
+                                               Style="{DynamicResource ThematicTextBlock}"/>
+                                    <TextBox Text="{Binding Path=XYPrintAcceleration, Mode=TwoWay}"
+                                             Width="{DynamicResource WideControlWidth}"
+                                             Style="{DynamicResource ThematicTextBox}">
+                                        <TextBox.ToolTip>
+                                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                                Typically, there's no reason why this shouldn't be set to the maximum acceleration value as set in the Printer menu.
+                                            </TextBlock>
+                                        </TextBox.ToolTip>
+                                    </TextBox>
+                                    <TextBlock Text="mm/s²"
+                                               Width="{DynamicResource NarrowControlWidth}" 
+                                               Style="{DynamicResource ThematicTextBlock}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <!--#endregion-->
+
+                            <!--#region Z Axis-->
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal"
+                                            Height="{DynamicResource StandardControlHeight}">
+                                    <Image Source="/Resources/General/MaxSpeed.png"
+                                           Style="{DynamicResource ThematicControlImage}"
+                                           Width="{DynamicResource NarrowControlWidth}"/>
+                                    <TextBlock Text="Z Print Speed"
+                                               Width="{DynamicResource StandardControlWidth}"
+                                               Style="{DynamicResource ThematicTextBlock}"/>
+                                    <TextBox Text="{Binding Path=ZPrintSpeed, Mode=TwoWay}"
+                                             Width="{DynamicResource WideControlWidth}" 
+                                             Style="{DynamicResource ThematicTextBox}">
+                                        <TextBox.ToolTip>
+                                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            Speed at which the actuator will move during printing.
+                                            <LineBreak/>
+                                            Higher speeds will reduce operation time.
+                                            <LineBreak/>
+                                            For continuous extrusion printing, higher print speeds will decrease filament diameter.
+                                            </TextBlock>
+                                        </TextBox.ToolTip>
+                                    </TextBox>
+                                    <TextBlock Text="mm/s"
+                                               Width="{DynamicResource NarrowControlWidth}" 
+                                               Style="{DynamicResource ThematicTextBlock}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                            Height="{DynamicResource StandardControlHeight}">
+                                    <Image Source="/Resources/General/Acceleration.png"
+                                           Style="{DynamicResource ThematicControlImage}"
+                                           Width="{DynamicResource NarrowControlWidth}"/>
+                                    <TextBlock Text="Z Acceleration"
+                                               Width="{DynamicResource StandardControlWidth}" 
+                                               Style="{DynamicResource ThematicTextBlock}"/>
+                                    <TextBox Text="{Binding Path=ZPrintAcceleration, Mode=TwoWay}"
+                                             Width="{DynamicResource WideControlWidth}"
+                                             Style="{DynamicResource ThematicTextBox}">
+                                        <TextBox.ToolTip>
+                                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                                Typically, there's no reason why this shouldn't be set to the maximum acceleration value as set in the Printer menu.
+                                            </TextBlock>
+                                        </TextBox.ToolTip>
+                                    </TextBox>
+                                    <TextBlock Text="mm/s²"
+                                               Width="{DynamicResource NarrowControlWidth}" 
+                                               Style="{DynamicResource ThematicTextBlock}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <!--#endregion-->
+                                    
+                        </StackPanel>
+                        <!--#endregion-->
+
+                        <!--#region Print Style-->
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"
+                                        Height="{DynamicResource StandardControlHeight}">
+                                <Grid Width="{DynamicResource NarrowControlWidth}"/>
+                                <TextBlock Text="Print Style"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Width="{DynamicResource StandardControlWidth}"
+                                           Style="{DynamicResource ThematicTextBlock}"/>
+                            </StackPanel>
+
+                            <ComboBox SelectedItem="{Binding PrintStyle}" ItemsSource="{Binding PrintStyleValues}"
+                                      Height="{DynamicResource StandardControlHeight}" Width="{DynamicResource WideControlWidth}"
+                                      Style="{DynamicResource ThematicComboBox}">
+                                <ComboBox.ToolTip>
+                                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                        If set to continuous print, the printhead will continually dispense as the XYZ stage is moving.
+                                        <LineBreak/>
+                                        If set to droplet print, the printhead will stop at regular intervals along the toolpath and dispense specified volumes for these droplets.
+                                        <LineBreak/>
+                                        Leaving this value as unset will produce errors while converting g-code.
+                                    </TextBlock>
+                                </ComboBox.ToolTip>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <Grid>
+                            <Grid.Resources>
+                                <DataTemplate x:Key="UnsetPrintStyleTemplate"
+                                              DataType="{x:Type vPrintStyle:UnsetPrintStyleView}">
+                                    <vPrintStyle:UnsetPrintStyleView/>
+                                </DataTemplate>
+                                <DataTemplate x:Key="ContinuousMotorizedPrintStyleTemplate"
+                                              DataType="{x:Type vmPrintStyle:ContinuousPrintStyleViewModel}">
+                                    <vContinuousPrintStyle:ContinuousMotorizedPrintStyleView/>
+                                </DataTemplate>
+                                <DataTemplate x:Key="ContinuousValvePrintStyleTemplate"
+                                              DataType="{x:Type vmPrintStyle:ContinuousPrintStyleViewModel}">
+                                    <vContinuousPrintStyle:ContinuousValvePrintStyleView/>
+                                </DataTemplate>
+                                <DataTemplate x:Key="DropletMotorizedPrintStyleTemplate"
+                                              DataType="{x:Type vmPrintStyle:DropletPrintStyleViewModel}">
+                                    <vDropletPrintStyle:DropletMotorizedPrintStyleView/>
+                                </DataTemplate>
+                                <DataTemplate x:Key="DropletValvePrintStyleTemplate"
+                                              DataType="{x:Type vmPrintStyle:DropletPrintStyleViewModel}">
+                                        <vDropletPrintStyle:DropletValvePrintStyleView/>
+                                </DataTemplate>
+                            </Grid.Resources>
+
+                            <!--The Datacontext is set within the Usercontrols inside the Datatemplates-->
+                            <ContentControl Content="{Binding }">
+                                <ContentControl.Style>
+                                    <Style TargetType="{x:Type ContentControl}">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource UnsetPrintStyleTemplate}"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding PrintStyle}" Value="{x:Static mPrintStyle:PrintStyle.Continuous}"/>
+                                                    <Condition Binding="{Binding PrintheadViewModel.PrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Motorized}"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="ContentTemplate" Value="{StaticResource ContinuousMotorizedPrintStyleTemplate}"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding PrintStyle}" Value="{x:Static mPrintStyle:PrintStyle.Continuous}"/>
+                                                    <Condition Binding="{Binding PrintheadViewModel.PrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Valve}"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="ContentTemplate" Value="{StaticResource ContinuousValvePrintStyleTemplate}"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding PrintStyle}" Value="{x:Static mPrintStyle:PrintStyle.Droplet}"/>
+                                                    <Condition Binding="{Binding PrintheadViewModel.PrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Motorized}"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="ContentTemplate" Value="{StaticResource DropletMotorizedPrintStyleTemplate}"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding PrintStyle}" Value="{x:Static mPrintStyle:PrintStyle.Droplet}"/>
+                                                    <Condition Binding="{Binding PrintheadViewModel.PrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Valve}"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="ContentTemplate" Value="{StaticResource DropletValvePrintStyleTemplate}"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
+                        </Grid>
+                        <!--#endregion-->
+
+                        <!--#region Remove Material Button-->
+                        <Border HorizontalAlignment="Right" 
+                                Style="{DynamicResource ThematicButtonBorder}"
+                                Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
+                                                     Path=DataContext.CanRemoveMaterial,
+                                                     Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.RemoveMaterialCommand}"
+                                    CommandParameter="{Binding Name}"
+                                    Style="{DynamicResource ThematicButton}"
+                                    Height="{DynamicResource StandardImageButtonHeight}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <StackPanel Orientation="Horizontal"
+                                                    Background="Transparent">
+                                            <Image Source="/Resources/Buttons/RemoveMaterial.png"
+                                                   Height="{DynamicResource StandardImageButtonHeight}"
+                                                   Style="{DynamicResource ThematicControlImage}"
+                                                   Margin="0, 0, 0, 0"/>
+                                            <StackPanel Orientation="Vertical"
+                                                        VerticalAlignment="Center"
+                                                        Margin="5, 5, 5, 5">
+                                                <TextBlock Text="Remove"
+                                                           Style="{DynamicResource ThematicTextBlock}"
+                                                           Margin="0, 0, 0, 0"/>
+                                                <TextBlock Text="Material"
+                                                           Style="{DynamicResource ThematicTextBlock}"
+                                                           Margin="0, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <Button.ToolTip>
+                                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                        Remove this material from the software. Note that parameters will not be saved.
+                                    </TextBlock>
+                                </Button.ToolTip>
+                            </Button>
+                        </Border>
+                        <!--#endregion-->
+
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </StackPanel>        
+</UserControl>

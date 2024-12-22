@@ -1,0 +1,419 @@
+﻿<Window x:Class="ModiPrint.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModiPrint"
+        xmlns:v="clr-namespace:ModiPrint.Views"
+        xmlns:vControl="clr-namespace:ModiPrint.Views.ControlViews"
+        xmlns:vStatusAndControl="clr-namespace:ModiPrint.Views.StatusAndControlViews"
+        xmlns:vPrinter="clr-namespace:ModiPrint.Views.PrinterViews"
+        xmlns:vPrint="clr-namespace:ModiPrint.Views.PrintViews"
+        xmlns:vm="clr-namespace:ModiPrint.ViewModels"
+        xmlns:vmSettings="clr-namespace:ModiPrint.ViewModels.SettingsViewModels"
+        xmlns:vmRealTimeStatus="clr-namespace:ModiPrint.ViewModels.RealTimeStatusViewModels"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Width="1920"
+        Height="1080"
+        AllowsTransparency="True"
+        Name="mainWindow">
+
+    <!--#region Resources-->
+    <Window.Resources>
+        <ResourceDictionary>
+            <vm:MainViewModel x:Key="MainViewModel"/>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="GlobalResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <!--#endregion-->
+
+    <Window.Background>
+        <ImageBrush ImageSource="/Resources/MainWindow/Background.png"/>
+    </Window.Background>
+
+    <Grid DataContext="{Binding Source={StaticResource MainViewModel}}"
+          Background="{DynamicResource StandardBackgroundColor}">
+
+        <Grid.RowDefinitions>
+            <!--Space above the background-->
+            <RowDefinition Height="3*"/>
+            <!--Space reserved for the close, maximize, and minimize window buttons-->
+            <RowDefinition Height="1.83*"/>
+            <!--Space for the main content-->
+            <RowDefinition Height="20*"/>
+            <!--Space below the background-->
+            <RowDefinition Height="3.15*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <!--Space reserved for the main menu buttons-->
+            <ColumnDefinition Width="19.55*"/>
+            <!--Space for the main content-->
+            <ColumnDefinition Width="28.8*"/>
+            <!--Space for the right of the background-->
+            <ColumnDefinition Width="1.65*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.RowSpan="4"
+              Grid.Column="0" Grid.ColumnSpan="3">
+            <Viewbox Stretch="Fill">
+                <Grid>
+                    
+                    <!--#region Main Menu Buttons-->
+                    <!--Printer Button-->
+                    <Button Command="{Binding SetMenuCommand}" CommandParameter="Printer">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/MainWindow/Printer.png"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/PrinterMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/Printer.png"/>
+                                    </Trigger>
+                                    <DataTrigger Binding="{Binding Menu}" Value="Printer">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/PrinterSelected.png"/>
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                Set parameters for the printer hardware.
+                            </TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Print Button-->
+                    <Button Command="{Binding SetMenuCommand}" CommandParameter="Print">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/MainWindow/Print.png"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/PrintMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/Print.png"/>
+                                    </Trigger>
+                                    <DataTrigger Binding="{Binding Menu}" Value="Print">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/PrintSelected.png"/>
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                Set parameters for and execute a print sequence.
+                            </TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Control Button-->
+                    <Button Command="{Binding SetMenuCommand}" CommandParameter="Control">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/MainWindow/Control.png"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/ControlMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/Control.png"/>
+                                    </Trigger>
+                                    <DataTrigger Binding="{Binding Menu}" Value="Control">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/ControlSelected.png"/>
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                Manage serial connection and manually control the printer.
+                            </TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Save Button-->
+                    <Button DataContext="{Binding SaveLoadViewModel}"
+                            Command="{Binding SaveModiPrintXMLFileCommand}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/MainWindow/Save.png"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/SaveMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/Save.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                Save all parameters from the Printer and Print menu to a .xml file.
+                            </TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Load Button-->
+                    <Button DataContext="{Binding SaveLoadViewModel}"
+                            Command="{Binding LoadModiPrintXMLFileCommand}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/MainWindow/Load.png"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/LoadMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/Load.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                Save all parameters from a .xml file.
+                            </TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+
+                    <!--Errors Button-->
+                    <Button Command="{Binding SetMenuCommand}" CommandParameter="Errors">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/MainWindow/Errors.png"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/ErrorsMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/Errors.png"/>
+                                    </Trigger>
+                                    <DataTrigger Binding="{Binding Menu}" Value="Errors">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/ErrorsSelected.png"/>
+                                    </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ErrorListViewModel.Attention}" Value="true"/>
+                                            <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/ErrorsAttention.png"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ErrorListViewModel.Attention}" Value="true"/>
+                                            <Condition Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource Self}}" Value="true"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/ErrorsAttentionMouseOver.png"/>
+                                    </MultiDataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                Displays all errors that may arise from GCode conversion, operations, or saving and loading.
+                                <LineBreak/>
+                                If an error comes up, this button will turn red.
+                                <LineBreak/>
+                                Errors typically fail the operation in question and should be attended to.
+                            </TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+                    <!--#endregion-->
+
+                    <!--#region Windows Buttons-->
+
+                    <!--Minimize Window Button-->
+                    <Button Command="{Binding MinimizeWindowCommand}" CommandParameter="{Binding ElementName=mainWindow}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/MainWindow/MinimizeWindow.png"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/MinimizeWindowMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/MinimizeWindow.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!--Maximize Window Button-->
+                    <Button Command="{Binding MaximizeWindowCommand}" CommandParameter="{Binding ElementName=mainWindow}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/MainWindow/MaximizeWindow.png"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/MaximizeWindowMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/MaximizeWindow.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!--Close Window Button-->
+                    <Button Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=mainWindow}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/MainWindow/CloseWindow.png"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/CloseWindowMouseOver.png"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Image" Property="Source"
+                                                Value="/Resources/MainWindow/CloseWindow.png"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <!--#endregion-->
+
+                </Grid>
+            </Viewbox>
+        </Grid>
+
+        <!--#region Execute Print Sequence-->
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="1" Grid.Column="1">
+
+                <vPrint:PrintExecuteView 
+                    DataContext="{Binding PrintExecuteViewModel}"
+                    Margin="10, 10, 10, 10"/>
+
+            </Grid>
+            
+        </Grid>
+        <!--#endregion-->
+
+        <Grid Grid.Row="2" Grid.Column="1">
+
+            <!--#region Main Content Display Templates-->
+            <!--Datacontext is set within the UserControls-->
+            <Grid.Resources>
+
+                <!--Unset Template-->
+                <DataTemplate x:Key="UnsetTemplate">
+                    <v:UnsetMainWindow
+                        DataContext="{Binding UnsetMainViewModel}"
+                        Margin="10, 10, 10, 10"/>
+                </DataTemplate>
+
+                <!--Printer Template-->
+                <DataTemplate x:Key="PrinterTemplate">
+                    <vPrinter:PrinterView
+                        DataContext="{Binding }"
+                        Margin="10, 10, 10, 10"/>
+                </DataTemplate>
+
+                <!--Print Template-->
+                <DataTemplate x:Key="PrintTemplate">
+                    <vPrint:PrintView
+                        DataContext="{Binding }"
+                        Margin="10, 10, 10, 10"/>
+                </DataTemplate>
+
+                <!--Control Template-->
+                <DataTemplate x:Key="ControlTemplate">
+                    <vStatusAndControl:StatusControlView Grid.Row="2"
+                        DataContext="{Binding }"
+                        Margin="5, 5, 5, 5"/>
+                </DataTemplate>
+
+                <!--Errors Template-->
+                <DataTemplate x:Key="ErrorsTemplate">
+                    <v:ErrorListView 
+                        DataContext="{Binding ErrorListViewModel}"
+                        Margin="10, 10, 10, 10"/>
+                </DataTemplate>
+
+            </Grid.Resources>
+            <!--#endregion-->
+
+            <!--#region Main Content Display Setter-->
+            <ContentControl Content="{Binding }">
+                <ContentControl.Style>
+                    <Style TargetType="{x:Type ContentControl}">
+
+                        <!--Unset-->
+                        <Setter Property="ContentTemplate" Value="{StaticResource UnsetTemplate}"/>
+                        <Style.Triggers>
+                            <!--Printer-->
+                            <DataTrigger Binding="{Binding Menu}" Value="Printer">
+                                <Setter Property="ContentTemplate" Value="{StaticResource PrinterTemplate}"/>
+                            </DataTrigger>
+
+                            <!--Print-->
+                            <DataTrigger Binding="{Binding Menu}" Value="Print">
+                                <Setter Property="ContentTemplate" Value="{StaticResource PrintTemplate}"/>
+                            </DataTrigger>
+
+                            <!--Control-->
+                            <DataTrigger Binding="{Binding Menu}" Value="Control">
+                                <Setter Property="ContentTemplate" Value="{StaticResource ControlTemplate}"/>
+                            </DataTrigger>
+
+                            <!--Errors-->
+                            <DataTrigger Binding="{Binding Menu}" Value="Errors">
+                                <Setter Property="ContentTemplate" Value="{StaticResource ErrorsTemplate}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            <!--#endregion-->
+
+        </Grid>
+    </Grid>
+
+</Window>

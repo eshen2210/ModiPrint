@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="ModiPrint.Views.StatusAndControlViews.SerialCommunicationViews.SerialMessageDisplayView"    
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ModiPrint.Views.StatusAndControlViews.SerialCommunicationViews"
+             xmlns:vm="clr-namespace:ModiPrint.ViewModels"
+             xmlns:uc="clr-namespace:ModiPrint.Utilities.ControlFunctions"
+             mc:Ignorable="d">
+        
+    <!--#region Serial Communication Displays-->
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <!--Outgoing Messages-->
+            <ColumnDefinition Width="*" />
+            <!--Incoming Messages-->
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--ScrollView with TextBlock that displays all outgoing serial communications-->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="Sent Messages"
+                       Style="{DynamicResource ThematicTextBlock}">
+                <TextBlock.ToolTip>
+                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                        All messages sent to the microcontroller.
+                    </TextBlock>
+                </TextBlock.ToolTip>
+            </TextBlock>
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden"
+                          uc:AutoScrollBehavior.AutoScroll="True"
+                          Style="{DynamicResource ThematicScrollViewer}">
+                <ListView ItemsSource="{Binding OutgoingMessageList}" 
+                          Style="{DynamicResource ThematicListView}"/>
+            </ScrollViewer>
+        </Grid>
+        
+        <!--ScrollView with TextBlock that displays all incoming serial communications-->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="Received Messages"
+                       Style="{DynamicResource ThematicTextBlock}">
+                <TextBlock.ToolTip>
+                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                        All messages received by the microcontroller.
+                    </TextBlock>
+                </TextBlock.ToolTip>
+            </TextBlock>
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden"
+                          uc:AutoScrollBehavior.AutoScroll="True"
+                          Style="{DynamicResource ThematicScrollViewer}">
+                <ListView ItemsSource="{Binding IncomingMessageList}"
+                          Style="{DynamicResource ThematicListView}"/>
+            </ScrollViewer>
+        </Grid>
+
+    </Grid>
+    <!--#endregion-->
+
+</UserControl>

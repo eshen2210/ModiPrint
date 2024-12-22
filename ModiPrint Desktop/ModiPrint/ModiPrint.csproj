@@ -1,0 +1,1027 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A1D709E-0B26-462D-854C-2068CB5F28EA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ModiPrint</RootNamespace>
+    <AssemblyName>ModiPrint</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Edwin Shen\Desktop\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ModiPrint.EntryPoint</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>953EB2C4CEA96EAAF2832826BD735C9641E63063</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>LilyV2.0_2_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.WPF.1.0.1\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.WPF.1.0.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="ToggleSwitch, Version=1.1.2.0, Culture=neutral, PublicKeyToken=8637099990568f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\ToggleSwitch.1.1.2\lib\net40-client\ToggleSwitch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="DataTypes\GlobalValues\GlobalValues.cs" />
+    <Compile Include="DataTypes\GlobalValues\SerialCommands.cs" />
+    <Compile Include="DataTypes\GlobalValues\SerialMessageCharacters.cs" />
+    <Compile Include="Models\GCodeConverterModels\ConvertedGCodeLine.cs" />
+    <Compile Include="Models\GCodeConverterModels\CorneringModels\CorneringModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\CorneringModels\MovementModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\ProcessG00Models\DropletModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\ProcessMiscModels\ProcessG92CommandModel.cs" />
+    <Compile Include="Models\PrinterModels\MicrocontrollerModels\PinModels\GPIOPinModel.cs" />
+    <Compile Include="Models\PrinterModels\MicrocontrollerModels\PinModels\GPIOPinModelUtilities.cs" />
+    <Compile Include="Models\PrintModels\PrintStyleModels\GradientModels\GradientModel.cs" />
+    <Compile Include="Models\PrintModels\PrintStyleModels\GradientModels\LineModel.cs" />
+    <Compile Include="Models\PrintModels\PrintStyleModels\GradientModels\PlaneModel.cs" />
+    <Compile Include="Models\PrintModels\PrintStyleModels\GradientModels\PointModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\ProcessG00Models\WriteG00.cs" />
+    <Compile Include="Models\GCodeConverterModels\GCodeStringParsing.cs" />
+    <Compile Include="Models\ManualControlModels\CalibrationModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ParametersModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\ProcessG00Models\CoordinateModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\GCodeConverterModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\ProcessG00Models\G00Calculator.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\ProcessG00Models\ProcessG00CommandModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\WriteSetEquipmentModels\WriteSetAxisModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\ProcessTCommandModels\ProcessTCommandModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\ProcessTCommandModels\SetWritePrintheadModel.cs" />
+    <Compile Include="Models\GCodeConverterModels\ProcessModels\WriteSetEquipmentModels\WriteSetPrintheadModel.cs" />
+    <Compile Include="Models\GCodeModels\GCodeFileManagerModel.cs" />
+    <Compile Include="Models\ManualControlModels\ManualControlModel.cs" />
+    <Compile Include="Models\PrinterModels\MicrocontrollerModels\PinModels\AnalogInPinModel.cs" />
+    <Compile Include="Models\PrinterModels\MicrocontrollerModels\PinModels\CommunicationPinModel.cs" />
+    <Compile Include="Models\PrinterModels\MicrocontrollerModels\PinModels\DigitalPinModel.cs" />
+    <Compile Include="Models\PrinterModels\MicrocontrollerModels\PinModels\PWMPinModel.cs" />
+    <Compile Include="Models\PrintModels\PrintStyleModels\ContinuousPrintStyleModel.cs" />
+    <Compile Include="Models\PrintModels\PrintStyleModels\DropletPrintStyleModel.cs" />
+    <Compile Include="Models\PrintModels\PrintStyleModels\PrintStyleModel.cs" />
+    <Compile Include="Models\PrinterModels\PrintheadModels\PrintheadTypeModels\MotorizedPrintheadTypeModel.cs" />
+    <Compile Include="Models\PrinterModels\PrintheadModels\PrintheadTypeModels\CustomPrintheadTypeModel.cs" />
+    <Compile Include="Models\PrinterModels\PrintheadModels\PrintheadTypeModels\PrintheadTypeModel.cs" />
+    <Compile Include="Models\PrinterModels\PrintheadModels\PrintheadTypeModels\ValvePrintheadTypeModel.cs" />
+    <Compile Include="Models\PrintModels\MaterialModels\MaterialModel.cs" />
+    <Compile Include="Models\PrinterModels\MicrocontrollerModels\MicrocontrollerModel.cs" />
+    <Compile Include="Models\PrinterModels\PrinterModel.cs" />
+    <Compile Include="Models\PrinterModels\AxisModels\AxisModel.cs" />
+    <Compile Include="Models\PrintModels\PrintModel.cs" />
+    <Compile Include="Models\RealTimeStatusModels\RealTimeStatusAxisModels\RealTimeStatusAxisModel.cs" />
+    <Compile Include="Models\RealTimeStatusModels\RealTimeStatusDataModel.cs" />
+    <Compile Include="Models\RealTimeStatusModels\RealTimeStatusPrintheadModels\RealTimeStatusCustomPrintheadModel.cs" />
+    <Compile Include="Models\RealTimeStatusModels\RealTimeStatusPrintheadModels\RealTimeStatusMotorizedPrintheadModel.cs" />
+    <Compile Include="Models\RealTimeStatusModels\RealTimeStatusPrintheadModels\RealTimeStatusPrintheadModel.cs" />
+    <Compile Include="Models\RealTimeStatusModels\RealTimeStatusPrintheadModels\RealTimeStatusUnsetPrintheadModel.cs" />
+    <Compile Include="Models\RealTimeStatusModels\RealTimeStatusPrintheadModels\RealTimeStatusValvePrintheadModel.cs" />
+    <Compile Include="Models\SerialCommunicationModels\ReportingModels\SerialMessageEventArgs.cs" />
+    <Compile Include="Models\SerialCommunicationModels\SerialCommunicationOutgoingMessagesModel.cs" />
+    <Compile Include="Models\RealTimeStatusModels\RealTimeStatusSerialInterpreterModel.cs" />
+    <Compile Include="Models\SerialCommunicationModels\SerialCommunicationCommandSetsModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\GCodeXMLSerializerModels\GCodeManagerXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\GCodeXMLSerializerModels\GCodeManagerXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\ModiPrintXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\ModiPrintXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\AxisXMLSerializerModels\AxisXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrinterXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrinterXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadTypeXMLSerializerModels\CustomPrintheadTypeXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadTypeXMLSerializerModels\CustomPrintheadTypeXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadTypeXMLSerializerModels\MotorizedPrintheadTypeXMLDeserializer.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadTypeXMLSerializerModels\MotorizedPrintheadTypeXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadTypeXMLSerializerModels\PrintheadTypeXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadTypeXMLSerializerModels\PrintheadTypeXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadTypeXMLSerializerModels\ValvePrintheadTypeXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadTypeXMLSerializerModels\ValvePrintheadTypeXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\PrintheadXMLSerializerModels\PrintheadXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\MaterialXMLSerializerModels\MaterialXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\MaterialXMLSerializerModels\MaterialXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\PrintStyleXMLSerializerModels\ContinuousPrintStyleXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\PrintStyleXMLSerializerModels\ContinuousPrintStyleXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\PrintStyleXMLSerializerModels\DropletPrintStyleXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\PrintStyleXMLSerializerModels\DropletPrintStyleXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\PrintStyleXMLSerializerModels\PrintStyleXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\PrintStyleXMLSerializerModels\PrintStyleXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\PrintXMLDeserializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrintXMLSerializerModels\PrintXMLSerializerModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\XMLDeserializerInitializeModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\XMLConverterModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\XMLSerializerInitializeModel.cs" />
+    <Compile Include="Utilities\ControlFunctions\Attach.cs" />
+    <Compile Include="Utilities\ControlFunctions\AutoScrollBehavior.cs" />
+    <Compile Include="Utilities\ControlFunctions\InputBindingManager.cs" />
+    <Compile Include="Utilities\IValueConverters\BoolToImageConverter.cs" />
+    <Compile Include="Utilities\IValueConverters\EnumerationsToStringConverter.cs" />
+    <Compile Include="Utilities\IValueConverters\EnumerationsToVisibilityMultiConverter.cs" />
+    <Compile Include="Utilities\IValueConverters\IsNotBaseConverter.cs" />
+    <Compile Include="Utilities\IValueConverters\MathConverter.cs" />
+    <Compile Include="Utilities\IValueConverters\MathMultiConverter.cs" />
+    <Compile Include="ViewModels\ErrorListViewModel.cs" />
+    <Compile Include="Models\GCodeModels\GCodeModel.cs" />
+    <Compile Include="Models\PrinterModels\PrintheadModels\PrintheadModel.cs" />
+    <Compile Include="Utilities\IValueConverters\TrueToFalseConverter.cs" />
+    <Compile Include="ViewModels\ErrorReporterViewModel.cs" />
+    <Compile Include="ViewModels\ManualControlViewModels\AxesPrintStyles\AxesPrintStyle.cs" />
+    <Compile Include="ViewModels\ManualControlViewModels\AxesPrintStyles\ContinuousPrintStyle.cs" />
+    <Compile Include="ViewModels\ManualControlViewModels\AxesPrintStyles\DropletPrintStyle.cs" />
+    <Compile Include="ViewModels\ManualControlViewModels\AxesPrintStyles\MovementOnlyStyle.cs" />
+    <Compile Include="ViewModels\ManualControlViewModels\CalibrationViewModel.cs" />
+    <Compile Include="ViewModels\ManualControlViewModels\ManualControlViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\AxisViewModels\AxisViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\MicrocontrollerViewModels\GPIOPinListsViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\MicrocontrollerViewModels\PinViewModels\AnalogInPinViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\MicrocontrollerViewModels\PinViewModels\CommunicationPinViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\MicrocontrollerViewModels\PinViewModels\DigitalPinViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\MicrocontrollerViewModels\PinViewModels\GPIOPinViewModelUtilities.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\MicrocontrollerViewModels\PinViewModels\PWMPinViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\PrintheadViewModels\PrintheadTypeViewModels\MotorizedPrintheadTypeViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\PrintheadViewModels\PrintheadTypeViewModels\CustomPrintheadTypeViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\PrintheadViewModels\PrintheadTypeViewModels\PrintheadTypeViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\PrintheadViewModels\PrintheadTypeViewModels\ValvePrintheadTypeViewModel.cs" />
+    <Compile Include="ViewModels\PrintViewModels\MaterialViewModels\MaterialViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\MicrocontrollerViewModels\PinViewModels\GPIOPinViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\MicrocontrollerViewModels\MicrocontrollerViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\PrinterViewModel.cs" />
+    <Compile Include="ViewModels\PrinterViewModels\PrintheadViewModels\PrintheadViewModel.cs" />
+    <Compile Include="ViewModels\PrintViewModels\PrintExecuteViewModel.cs" />
+    <Compile Include="ViewModels\PrintViewModels\PrintStyleViewModels\ContinuousPrintStyleViewModel.cs" />
+    <Compile Include="ViewModels\PrintViewModels\PrintStyleViewModels\DropletPrintStyleViewModel.cs" />
+    <Compile Include="ViewModels\PrintViewModels\PrintStyleViewModels\PrintStyleViewModel.cs" />
+    <Compile Include="ViewModels\PrintViewModels\PrintViewModel.cs" />
+    <Compile Include="ViewModels\RealTimeStatusViewModels\RealTimeStatusAxisViewModels\RealTimeStatusAxisViewModel.cs" />
+    <Compile Include="ViewModels\RealTimeStatusViewModels\RealTimeStatusDataViewModel.cs" />
+    <Compile Include="ViewModels\RealTimeStatusViewModels\RealTimeStatusPrintheadViewModels\RealTimeStatusCustomPrintheadViewModel.cs" />
+    <Compile Include="ViewModels\RealTimeStatusViewModels\RealTimeStatusPrintheadViewModels\RealTimeStatusMotorizedPrintheadViewModel.cs" />
+    <Compile Include="ViewModels\RealTimeStatusViewModels\RealTimeStatusPrintheadViewModels\RealTimeStatusPrintheadViewModel.cs" />
+    <Compile Include="ViewModels\RealTimeStatusViewModels\RealTimeStatusPrintheadViewModels\RealTimeStatusUnsetPrintheadViewModel.cs" />
+    <Compile Include="ViewModels\RealTimeStatusViewModels\RealTimeStatusPrintheadViewModels\RealTimeStatusValvePrintheadViewModel.cs" />
+    <Compile Include="ViewModels\SerialCommunicationViewModels\SerialMessageDisplayViewModel.cs" />
+    <Compile Include="Models\XMLSerializerModels\PrinterXMLSerializerModels\AxisXMLSerializerModels\AxisXMLSerializerModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModels\SaveLoadViewModel.cs" />
+    <Compile Include="ViewModels\UnsetMainViewModel.cs" />
+    <Compile Include="Views\ControlViews\OpaqueClickableImage.cs" />
+    <Compile Include="Views\PrinterViews\AxisViews\AxisView.xaml.cs">
+      <DependentUpon>AxisView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorListView.xaml.cs">
+      <DependentUpon>ErrorListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\GCodeManagerViews\GCodeManagerView.xaml.cs">
+      <DependentUpon>GCodeManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrinterViews\MicrocontrollerViews\GPIOPinView.xaml.cs">
+      <DependentUpon>GPIOPinView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrinterViews\PrinterView.xaml.cs">
+      <DependentUpon>PrinterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrinterViews\PrintheadViews\PrintheadTypeViews\MotorizedPrintheadTypeView.xaml.cs">
+      <DependentUpon>MotorizedPrintheadTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrinterViews\PrintheadViews\PrintheadTypeViews\CustomPrintheadTypeView.xaml.cs">
+      <DependentUpon>CustomPrintheadTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrinterViews\PrintheadViews\PrintheadTypeViews\UnsetPrintheadTypeView.xaml.cs">
+      <DependentUpon>UnsetPrintheadTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrinterViews\PrintheadViews\PrintheadTypeViews\ValvePrintheadTypeView.xaml.cs">
+      <DependentUpon>ValvePrintheadTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\MaterialViews\MaterialView.xaml.cs">
+      <DependentUpon>MaterialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrinterViews\PrintheadViews\PrintheadView.xaml.cs">
+      <DependentUpon>PrintheadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\PrintExecuteView.xaml.cs">
+      <DependentUpon>PrintExecuteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\PrintStyleViews\ContinuousPrintStyles\ContinuousMotorizedPrintStyleView.xaml.cs">
+      <DependentUpon>ContinuousMotorizedPrintStyleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\PrintStyleViews\ContinuousPrintStyles\ContinuousValvePrintStyleView.xaml.cs">
+      <DependentUpon>ContinuousValvePrintStyleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\PrintStyleViews\DropletPrintStyles\DropletMotorizedPrintStyleView.xaml.cs">
+      <DependentUpon>DropletMotorizedPrintStyleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\PrintStyleViews\DropletPrintStyles\DropletValvePrintStyleView.xaml.cs">
+      <DependentUpon>DropletValvePrintStyleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\PrintStyleViews\DropletPrintStyles\GradientView.xaml.cs">
+      <DependentUpon>GradientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\PrintStyleViews\UnsetPrintStyleView.xaml.cs">
+      <DependentUpon>UnsetPrintStyleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrintViews\PrintView.xaml.cs">
+      <DependentUpon>PrintView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\EMinus.xaml.cs">
+      <DependentUpon>EMinus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\EPlus.xaml.cs">
+      <DependentUpon>EPlus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\ValveOpen.xaml.cs">
+      <DependentUpon>ValveOpen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XMinus.xaml.cs">
+      <DependentUpon>XMinus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XMinusYMinus.xaml.cs">
+      <DependentUpon>XMinusYMinus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XMinusYPlus.xaml.cs">
+      <DependentUpon>XMinusYPlus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XPlus.xaml.cs">
+      <DependentUpon>XPlus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XPlusYMinus.xaml.cs">
+      <DependentUpon>XPlusYMinus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XPlusYPlus.xaml.cs">
+      <DependentUpon>XPlusYPlus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\YMinus.xaml.cs">
+      <DependentUpon>YMinus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\YPlus.xaml.cs">
+      <DependentUpon>YPlus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\ZMinus.xaml.cs">
+      <DependentUpon>ZMinus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\ZPlus.xaml.cs">
+      <DependentUpon>ZPlus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\MotorizedContinuousPrintExecute.xaml.cs">
+      <DependentUpon>MotorizedContinuousPrintExecute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\MotorizedDropletPrintExecute.xaml.cs">
+      <DependentUpon>MotorizedDropletPrintExecute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\MovementOnlyExecute.xaml.cs">
+      <DependentUpon>MovementOnlyExecute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\PrintSettingsExecuteView.xaml.cs">
+      <DependentUpon>PrintSettingsExecuteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\ValveContinuousPrintExecute.xaml.cs">
+      <DependentUpon>ValveContinuousPrintExecute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\ValveDropletPrintExecute.xaml.cs">
+      <DependentUpon>ValveDropletPrintExecute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\MotorizedContinuousPrintParameters.xaml.cs">
+      <DependentUpon>MotorizedContinuousPrintParameters.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\MotorizedDropletPrintParameters.xaml.cs">
+      <DependentUpon>MotorizedDropletPrintParameters.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\PrintSettingsParameterView.xaml.cs">
+      <DependentUpon>PrintSettingsParameterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\ValveContinuousPrintParameters.xaml.cs">
+      <DependentUpon>ValveContinuousPrintParameters.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\ValveDropletPrintParameters.xaml.cs">
+      <DependentUpon>ValveDropletPrintParameters.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\CalibrationViews\CalibrationView.xaml.cs">
+      <DependentUpon>CalibrationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\CalibrationViews\FindLimitSettings.xaml.cs">
+      <DependentUpon>FindLimitSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\CalibrationViews\HomeSettings.xaml.cs">
+      <DependentUpon>HomeSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\CalibrationViews\SetOriginSettings.xaml.cs">
+      <DependentUpon>SetOriginSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\CommandSettingsView.xaml.cs">
+      <DependentUpon>CommandSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\EquipmentSelectionViews\EquipmentSelectionSettingsViews\SetAxis.xaml.cs">
+      <DependentUpon>SetAxis.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\EquipmentSelectionViews\EquipmentSelectionSettingsViews\SetMotorizedPrinthead.xaml.cs">
+      <DependentUpon>SetMotorizedPrinthead.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\EquipmentSelectionViews\EquipmentSelectionSettingsViews\SetValvePrinthead.xaml.cs">
+      <DependentUpon>SetValvePrinthead.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\EquipmentSelectionViews\EquipmentSelectionView.xaml.cs">
+      <DependentUpon>EquipmentSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\SerialCommunicationViews\SerialCommunicationView.xaml.cs">
+      <DependentUpon>SerialCommunicationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\SerialCommunicationViews\SerialMessageDisplayView.xaml.cs">
+      <DependentUpon>SerialMessageDisplayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrinterViews\MicrocontrollerViews\MicrocontrollerView.xaml.cs">
+      <DependentUpon>MicrocontrollerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintStatusControlView.xaml.cs">
+      <DependentUpon>AxesPrintStatusControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusAndControlViews\StatusControlView.xaml.cs">
+      <DependentUpon>StatusControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UnsetMainWindow.xaml.cs">
+      <DependentUpon>UnsetMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Properties\DesignTimeResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="Views\PrinterViews\AxisViews\AxisView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ErrorListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\GCodeManagerViews\GCodeManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GlobalResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindowView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\SerialCommunicationModels\SerialCommunicationMainModel.cs" />
+    <Compile Include="Utilities\RelayCommand.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="EntryPoint.cs" />
+    <Compile Include="ViewModels\GCodeManagerViewModels\GCodeManagerViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\SerialCommunicationViewModels\SerialCommunicationViewModel.cs" />
+    <Compile Include="Views\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\PrinterViews\MicrocontrollerViews\GPIOPinView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrinterViews\PrinterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrinterViews\PrintheadViews\PrintheadTypeViews\MotorizedPrintheadTypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrinterViews\PrintheadViews\PrintheadTypeViews\CustomPrintheadTypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrinterViews\PrintheadViews\PrintheadTypeViews\UnsetPrintheadTypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrinterViews\PrintheadViews\PrintheadTypeViews\ValvePrintheadTypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\MaterialViews\MaterialView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrinterViews\PrintheadViews\PrintheadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\PrintExecuteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\PrintStyleViews\ContinuousPrintStyles\ContinuousMotorizedPrintStyleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\PrintStyleViews\ContinuousPrintStyles\ContinuousValvePrintStyleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\PrintStyleViews\DropletPrintStyles\DropletMotorizedPrintStyleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\PrintStyleViews\DropletPrintStyles\DropletValvePrintStyleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\PrintStyleViews\DropletPrintStyles\GradientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\PrintStyleViews\UnsetPrintStyleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrintViews\PrintView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\EMinus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\EPlus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\ValveOpen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XMinus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XMinusYMinus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XMinusYPlus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XPlus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XPlusYMinus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\XPlusYPlus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\YMinus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\YPlus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\ZMinus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintSettingsViews\ZPlus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\MotorizedContinuousPrintExecute.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\MotorizedDropletPrintExecute.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\MovementOnlyExecute.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\PrintSettingsExecuteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\ValveContinuousPrintExecute.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsExecuteViews\ValveDropletPrintExecute.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\MotorizedContinuousPrintParameters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\MotorizedDropletPrintParameters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\PrintSettingsParameterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\ValveContinuousPrintParameters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\PrintSettingsParameterViews\ValveDropletPrintParameters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\CalibrationViews\CalibrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\CalibrationViews\FindLimitSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\CalibrationViews\HomeSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\CalibrationViews\SetOriginSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\CommandSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\EquipmentSelectionViews\EquipmentSelectionSettingsViews\SetAxis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\EquipmentSelectionViews\EquipmentSelectionSettingsViews\SetMotorizedPrinthead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\EquipmentSelectionViews\EquipmentSelectionSettingsViews\SetValvePrinthead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\EquipmentSelectionViews\EquipmentSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\SerialCommunicationViews\SerialCommunicationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\SerialCommunicationViews\SerialMessageDisplayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrinterViews\MicrocontrollerViews\MicrocontrollerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\AxesPrintViews\AxesPrintStatusControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusAndControlViews\StatusControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UnsetMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataTypes\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\EMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\EMinusMouseOver.PNG" />
+    <Resource Include="Resources\XYZEControl\EPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\EPlusMouseOver.PNG" />
+    <Resource Include="Resources\XYZEControl\XMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\XMinusMouseOver.PNG" />
+    <Resource Include="Resources\XYZEControl\XPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\XPlusMouseOver.PNG" />
+    <Resource Include="Resources\XYZEControl\YMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\YMinusMouseOver.PNG" />
+    <Resource Include="Resources\XYZEControl\YPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\YPlusMouseOver.PNG" />
+    <Resource Include="Resources\XYZEControl\ZMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\ZMinusMouseOver.PNG" />
+    <Resource Include="Resources\XYZEControl\ZPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\ZPlusMouseOver.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\MotorizedPrintheadBackground.png" />
+    <Resource Include="Resources\XYZEControl\ValvePrintheadBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\XMinusYMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\XMinusYMinusMouseOver.PNG" />
+    <Resource Include="Resources\XYZEControl\XMinusYPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\XMinusYPlusMouseOver.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\XPlusYMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\XPlusYMinusMouseOver.PNG" />
+    <Resource Include="Resources\XYZEControl\XPlusYPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\XPlusYPlusMouseOver.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\XYZESettings\EMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\EPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\ValveOpen.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\XMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\XMinusYMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\XMinusYPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\XPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\XPlusYMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\XPlusYPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\YMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\YPlus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\ZMinus.PNG" />
+    <Resource Include="Resources\XYZEControl\XYZESettings\ZPlus.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Acceleration.PNG" />
+    <Resource Include="Resources\General\LimitSwitch.PNG" />
+    <Resource Include="Resources\General\MaxLimit.PNG" />
+    <Resource Include="Resources\General\MaxSpeed.PNG" />
+    <Resource Include="Resources\General\MinLimit.PNG" />
+    <Resource Include="Resources\General\Motor.PNG" />
+    <Resource Include="Resources\General\Offset.PNG" />
+    <Resource Include="Resources\General\StepDistance.PNG" />
+    <Resource Include="Resources\General\StepPulse.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Printhead.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Axis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\TextFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\AddPrinthead.PNG" />
+    <Resource Include="Resources\Buttons\Back.png" />
+    <Resource Include="Resources\Buttons\BackMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\AddAxis.PNG" />
+    <Resource Include="Resources\Buttons\AddMaterial.PNG" />
+    <Resource Include="Resources\Buttons\Execute.png" />
+    <Resource Include="Resources\Buttons\RemoveAxis.PNG" />
+    <Resource Include="Resources\Buttons\RemoveMaterial.PNG" />
+    <Resource Include="Resources\Buttons\RemovePrinthead.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\UploadFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\ConvertFile.PNG" />
+    <Resource Include="Resources\Buttons\Disconnect.PNG" />
+    <Resource Include="Resources\Buttons\SendFile.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\SaveFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ArduinoMegaLayout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Volume.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Diameter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Microcontroller.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\ZAxis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Material.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\TextFileBright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TransparentImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ToggleButtons\Left.PNG" />
+    <Resource Include="Resources\ToggleButtons\LeftMouseOver.PNG" />
+    <Resource Include="Resources\ToggleButtons\Right.PNG" />
+    <Resource Include="Resources\ToggleButtons\RightMouseOver.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\ValvePrinthead.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\MotorizedPrinthead.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Move2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Continuous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Droplet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\InterpolateDistance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\FindLimit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\SetZLowerLimit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\MoveToOrigin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Position.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\Connect.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\USB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\ValveClose.png" />
+    <Resource Include="Resources\XYZEControl\ValveCloseMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\ValveOpen.png" />
+    <Resource Include="Resources\XYZEControl\ValveOpenMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\XBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\YBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\ZBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\InvertDirection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Buttons\SetPrintheadOffset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\XYZEControl\XYZELimits\ELowerLimit.png" />
+    <Resource Include="Resources\XYZEControl\XYZELimits\EUpperLimit.png" />
+    <Resource Include="Resources\XYZEControl\XYZELimits\XLowerLimit.png" />
+    <Resource Include="Resources\XYZEControl\XYZELimits\XUpperLimit.png" />
+    <Resource Include="Resources\XYZEControl\XYZELimits\YLowerLimit.png" />
+    <Resource Include="Resources\XYZEControl\XYZELimits\YUpperLimit.png" />
+    <Resource Include="Resources\XYZEControl\XYZELimits\ZLowerLimit.png" />
+    <Resource Include="Resources\XYZEControl\XYZELimits\ZUpperLimit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Gradient.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImageButtons\Pause.png" />
+    <Resource Include="Resources\ImageButtons\PauseMouseOver.png" />
+    <Resource Include="Resources\ImageButtons\Print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImageButtons\PrintMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImageButtons\PrintDisabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImageButtons\Clear.png" />
+    <Resource Include="Resources\ImageButtons\ClearMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\GradientScaling.png" />
+    <Resource Include="Resources\General\GradientShape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\JunctionDeviation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImageButtons\Resume.png" />
+    <Resource Include="Resources\ImageButtons\ResumeMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PrintSequenceControl\ConnectionDisabled.png" />
+    <Resource Include="Resources\PrintSequenceControl\ConnectionEnabled.png" />
+    <Resource Include="Resources\PrintSequenceControl\GCodeDisabled.png" />
+    <Resource Include="Resources\PrintSequenceControl\GCodeEnabled.png" />
+    <Resource Include="Resources\PrintSequenceControl\PrintheadDisabled.png" />
+    <Resource Include="Resources\PrintSequenceControl\PrintheadEnabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GithubLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ConcentrationGradientFormulas.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MainWindow\Background.PNG" />
+    <Resource Include="Resources\MainWindow\CloseWindow.PNG" />
+    <Resource Include="Resources\MainWindow\CloseWindowMouseOver.PNG" />
+    <Resource Include="Resources\MainWindow\Control.png" />
+    <Resource Include="Resources\MainWindow\ControlMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MainWindow\ControlSelected.png" />
+    <Resource Include="Resources\MainWindow\Errors.png" />
+    <Resource Include="Resources\MainWindow\ErrorsAttention.png" />
+    <Resource Include="Resources\MainWindow\ErrorsAttentionMouseOver.png" />
+    <Resource Include="Resources\MainWindow\ErrorsMouseOver.png" />
+    <Resource Include="Resources\MainWindow\MaximizeWindow.PNG" />
+    <Resource Include="Resources\MainWindow\MaximizeWindowMouseOver.PNG" />
+    <Resource Include="Resources\MainWindow\MinimizeWindow.PNG" />
+    <Resource Include="Resources\MainWindow\MinimizeWindowMouseOver.PNG" />
+    <Resource Include="Resources\MainWindow\Print.png" />
+    <Resource Include="Resources\MainWindow\Printer.png" />
+    <Resource Include="Resources\MainWindow\PrinterMouseOver.png" />
+    <Resource Include="Resources\MainWindow\PrinterSelected.png" />
+    <Resource Include="Resources\MainWindow\PrintMouseOver.png" />
+    <Resource Include="Resources\MainWindow\PrintSelected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MainWindow\ErrorsSelected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImageButtons\ResumeMicrocontroller.png" />
+    <Resource Include="Resources\ImageButtons\ResumeMicrocontrollerMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ImageButtons\Abort.png" />
+    <Resource Include="Resources\ImageButtons\AbortMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MainWindow\Save.png" />
+    <Resource Include="Resources\MainWindow\SaveMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MainWindow\Load.png" />
+    <Resource Include="Resources\MainWindow\LoadMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\General\Retract.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\McCloskeyLabLogo.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

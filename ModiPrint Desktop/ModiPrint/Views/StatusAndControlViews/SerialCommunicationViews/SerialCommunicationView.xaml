@@ -1,0 +1,177 @@
+﻿<UserControl x:Class="ModiPrint.Views.StatusAndControlViews.SerialCommunicationViews.SerialCommunicationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ModiPrint.Views.StatusAndControlViews.SerialCommunicationViews"
+             xmlns:vm="clr-namespace:ModiPrint.ViewModels"
+             mc:Ignorable="d">
+
+    <StackPanel Orientation="Vertical">
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--#region Serial Port Connection-->
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="/Views/GlobalResources.xaml"/>
+                    </ResourceDictionary.MergedDictionaries>
+
+                    <Style x:Key="ConnectionButtonBorder" TargetType="{x:Type Border}" BasedOn="{StaticResource ThematicButtonBorder}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPortOpen}" Value="True">
+                                <Setter Property="BorderBrush" Value="Gold"/>
+                                <Setter Property="BorderThickness" Value="10"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
+                    <Style x:Key="DisconnectionButtonBorder" TargetType="{x:Type Border}" BasedOn="{StaticResource ThematicButtonBorder}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPortOpen}" Value="False">
+                                <Setter Property="BorderBrush" Value="Gold"/>
+                                <Setter Property="BorderThickness" Value="10"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </ResourceDictionary>
+            </Grid.Resources>
+
+            <!--Select Serial Port-->
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <TextBlock Text="Serial Port"
+                           Style="{DynamicResource ThematicTextBlock}"/>
+
+                <ComboBox Name="cboSerialPorts"
+                          ItemsSource="{Binding PortNames}"
+                          Height="{DynamicResource StandardControlHeight}" Width="{DynamicResource WideControlWidth}"
+                          Style="{DynamicResource ThematicComboBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownOpened">
+                            <i:InvokeCommandAction Command="{Binding RefreshPortNamesCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ComboBox.ToolTip>
+                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                            Select the serial port that the microcontroller USB cable is connected to then press the Connect button to the right.
+                            <LineBreak/>
+                            To see what serial port the microcontroller is connected to, go to Device Manager (not a part of this program) then the PORT tab.
+                            <LineBreak/>
+                            You can also guess the serial port. If you guess correctly, the serial message display should tell you "Connected".
+                        </TextBlock>
+                    </ComboBox.ToolTip>
+                </ComboBox>
+            </StackPanel>
+
+            <!--Connect-->
+            <Border Grid.Column="1" HorizontalAlignment="Right"
+                    Style="{StaticResource ConnectionButtonBorder}">
+                <Button Content="Connect"
+                        Command="{Binding SerialConnectCommand}"
+                        CommandParameter="{Binding ElementName=cboSerialPorts, Path=Text}"
+                        Style="{DynamicResource ThematicButton}"
+                        Height="{DynamicResource StandardImageButtonHeight}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <StackPanel Orientation="Horizontal"
+                                        Background="Transparent">
+                                <Image Source="/Resources/Buttons/Connect.png"
+                                       Height="{DynamicResource StandardImageButtonHeight}"
+                                       Style="{DynamicResource ThematicControlImage}"
+                                       Margin="0, 0, 0, 0"/>
+                                <TextBlock Text="Connect"
+                                           VerticalAlignment="Center"
+                                           Style="{DynamicResource ThematicTextBlock}"/>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.ToolTip>
+                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                            Select the serial port that the microcontroller USB cable is connected to (drop-down to the left) then press this button.
+                            <LineBreak/>
+                            If a connection is established (to the appropriate microcontroller or not), this button will have a yellow border. 
+                            <LineBreak/>
+                            If a proper connection to the microcontroller is established, the serial message display should tell you "Connected".
+                            <LineBreak/>
+                            It is recommended that you do not connect to the microcontroller until 10 seconds after giving power to the microcontroller.
+                        </TextBlock>
+                    </Button.ToolTip>
+                </Button>
+            </Border>
+
+            <!--#region SerialPort Manual Messaging-->
+            <Grid Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" 
+                         Name="tbManualCommand"
+                         Text="{Binding ManualSerialSendMessage, Mode=TwoWay}"
+                         Height="{DynamicResource StandardControlHeight}"
+                         Style="{DynamicResource ThematicTextBox}">
+                    <TextBox.ToolTip>
+                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                            Type in a command to be directly sent to the microcontroller. Then press the Send Message button to the right.
+                            <LineBreak/>
+                            All acceptable commands that can be sent to the microcontroller can be found under the "ModiPrint GCode Documentation.docx" file on Github. 
+                        </TextBlock>
+                    </TextBox.ToolTip>
+                </TextBox>
+
+                <Border Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Style="{DynamicResource ThematicButtonBorder}">
+                    <Button Command="{Binding ManualAppendMessageCommand}"
+                            CommandParameter="{Binding ElementName=tbManualCommand, Path=Text}"
+                            Style="{DynamicResource ThematicButton}"
+                            Height="{DynamicResource StandardImageButtonHeight}">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            Background="Transparent">
+                                    <Image Source="/Resources/Buttons/SendFile.png"
+                                           Height="{DynamicResource StandardImageButtonHeight}"
+                                           Style="{DynamicResource ThematicControlImage}"
+                                           Margin="0, 0, 0, 0"/>
+                                    <StackPanel Orientation="Vertical"
+                                                VerticalAlignment="Center"
+                                                Margin="5, 5, 5, 5">
+                                        <TextBlock Text="Send"
+                                                   VerticalAlignment="Center"
+                                                   Style="{DynamicResource ThematicTextBlock}"
+                                                   Margin="0, 0, 0, 0"/>
+                                        <TextBlock Text="Message"
+                                                   VerticalAlignment="Center"
+                                                   Style="{DynamicResource ThematicTextBlock}"
+                                                   Margin="0, 0, 0, 0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.ToolTip>
+                            <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                Send a command (entered in the textbox to the left) directly to the microcontroller.
+                                <LineBreak/>
+                                As with all commands in menu, a serial connection must be established first.
+                            </TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+                </Border>
+
+            </Grid>
+        </Grid>
+        <!--#endregion-->
+        
+    </StackPanel>
+</UserControl>

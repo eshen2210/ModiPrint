@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="ModiPrint.Views.PrinterViews.PrinterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ModiPrint.Views.PrinterViews"
+             xmlns:vAxis="clr-namespace:ModiPrint.Views.PrinterViews.AxisViews"
+             xmlns:vMicrocontroller="clr-namespace:ModiPrint.Views.PrinterViews.MicrocontrollerViews"
+             xmlns:vPrinthead="clr-namespace:ModiPrint.Views.PrinterViews.PrintheadViews"
+             mc:Ignorable="d">
+
+    <TabControl Name="PrinterSettingsTabControl"
+                Style="{DynamicResource ThematicTabControl}"
+                SelectionChanged="PrinterSettingsTabControl_SelectionChanged">
+        
+        <!--XYZ Stage-->
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal"
+                            Height="{DynamicResource StandardControlHeight}">
+                    <Image Source="/Resources/General/Axis.png"
+                           Style="{DynamicResource ThematicControlImage}"
+                           Width="{DynamicResource NarrowControlWidth}"
+                           Margin="0, 0, 0, 0"/>
+                    <TextBlock Text="XYZ Stage"
+                               VerticalAlignment="Center"
+                               Style="{DynamicResource ThematicTabControlTextBlock}"
+                               Margin="0, 0, 0, 0"/>
+                </StackPanel>
+            </TabItem.Header>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden">
+                <vAxis:AxisView
+                    DataContext="{Binding PrinterViewModel}"
+                    Margin="10, 10, 10, 10"/>
+            </ScrollViewer>
+        </TabItem>
+
+        <!--Printhead-->
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal"
+                            Height="{DynamicResource StandardControlHeight}">
+                    <Image Source="/Resources/General/Printhead.png"
+                           Style="{DynamicResource ThematicControlImage}"
+                           Width="{DynamicResource NarrowControlWidth}"
+                           Margin="0, 0, 0, 0"/>
+                    <TextBlock Text="Printhead"
+                               VerticalAlignment="Center"
+                               Style="{DynamicResource ThematicTabControlTextBlock}"
+                               Margin="0, 0, 0, 0"/>
+                </StackPanel>
+                
+            </TabItem.Header>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden"
+                          Style="{DynamicResource ThematicScrollViewer}">
+                <vPrinthead:PrintheadView
+                    DataContext="{Binding PrinterViewModel}"
+                    Margin="10, 10, 10, 10"/>
+            </ScrollViewer>
+        </TabItem>
+
+        <!--Microcontroller-->
+        <!-- This is a totally unnessecary feature.
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal"
+                            Height="{DynamicResource StandardControlHeight}">
+                    <Image Source="/Resources/General/Microcontroller.png"
+                           Style="{DynamicResource ThematicControlImage}"
+                           Width="{DynamicResource NarrowControlWidth}"
+                           Margin="0, 0, 0, 0"/>
+                    <TextBlock Text="Pin Visualization"
+                               VerticalAlignment="Center"
+                               Style="{DynamicResource ThematicTabControlTextBlock}"
+                               Margin="0, 0, 0, 0"/>
+                </StackPanel>
+            </TabItem.Header>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible"
+                          Style="{DynamicResource ThematicScrollViewer}">
+                <vMicrocontroller:MicrocontrollerView
+                    DataContext="{Binding PrinterViewModel.MicrocontrollerViewModel}"
+                    Margin="10, 10, 10, 10"/>
+            </ScrollViewer>
+        </TabItem>
+        -->
+    </TabControl>
+
+</UserControl>

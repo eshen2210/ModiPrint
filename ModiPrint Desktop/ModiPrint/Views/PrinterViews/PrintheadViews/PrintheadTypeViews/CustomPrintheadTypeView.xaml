@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="ModiPrint.Views.PrinterViews.PrintheadViews.PrintheadTypeViews.CustomPrintheadTypeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:local="clr-namespace:ModiPrint.Views.PrinterViews.PrintheadViews.PrintheadTypeViews"
+             xmlns:vc="clr-namespace:ModiPrint.Utilities.IValueConverters"
+             mc:Ignorable="d">
+
+    <!--The Datacontext is set inside this Usercontrol-->
+    <!--This prevents a really weird Databinding bug with Datatriggered Datatemplates-->
+    <UserControl.DataContext>
+        <Binding Path="PrintheadTypeViewModel"/>
+    </UserControl.DataContext>
+
+    <GroupBox Header="Custom Printhead Settings">
+
+    </GroupBox>
+</UserControl>

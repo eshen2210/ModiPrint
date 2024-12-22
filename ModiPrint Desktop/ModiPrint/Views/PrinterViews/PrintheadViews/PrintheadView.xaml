@@ -1,0 +1,340 @@
+﻿<UserControl x:Class="ModiPrint.Views.PrinterViews.PrintheadViews.PrintheadView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ModiPrint.Views.PrinterViews.PrintheadViews"
+             xmlns:vm="clr-namespace:ModiPrint.ViewModels"
+             xmlns:v="clr-namespace:ModiPrint.Views"
+             xmlns:vc="clr-namespace:ModiPrint.Utilities.IValueConverters"
+             xmlns:mPrintheadType="clr-namespace:ModiPrint.Models.PrinterModels.PrintheadModels.PrintheadTypeModels"
+             xmlns:vmPrintheadType="clr-namespace:ModiPrint.ViewModels.PrinterViewModels.PrintheadViewModels.PrintheadTypeViewModels"
+             xmlns:vPrintheadType="clr-namespace:ModiPrint.Views.PrinterViews.PrintheadViews.PrintheadTypeViews"
+             xmlns:vControl="clr-namespace:ModiPrint.Views.ControlViews"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical">
+
+        <!--#region Add Printhead Button-->
+        <Border Style="{DynamicResource ThematicButtonBorder}"
+                HorizontalAlignment="Right">
+            <Button Command="{Binding AddPrintheadCommand}"
+                    Style="{DynamicResource ThematicButton}"
+                    Height="{DynamicResource StandardImageButtonHeight}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal"
+                                    Background="Transparent">
+                            <Image Source="/Resources/Buttons/AddPrinthead.png"
+                                   Height="{DynamicResource StandardImageButtonHeight}"
+                                   Style="{DynamicResource ThematicControlImage}"
+                                   Margin="0, 0, 0, 0"/>
+                            <StackPanel Orientation="Vertical"
+                                        VerticalAlignment="Center"
+                                        Margin="5, 5, 5, 5">
+                                <TextBlock Text="Add"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Margin="0, 0, 0, 0"/>
+                                <TextBlock Text="Printhead"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Margin="0, 0, 0, 0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.ToolTip>
+                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                        Add a printhead to the printer. 
+                        <LineBreak/>
+                        Be sure to set parameters for this new and any existing printheads before operation.
+                    </TextBlock>
+                </Button.ToolTip>
+            </Button>
+        </Border>
+        <!--#endregion-->
+            
+        <!--#region Printhead Tabs-->
+        <TabControl Name="PrintheadTabControl"
+                    ItemsSource="{Binding PrintheadViewModelList}"
+                    Style="{DynamicResource ThematicTabControl}"
+                    SelectionChanged="PrintheadTabControl_SelectionChanged">
+            <TabControl.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="/Views/GlobalResources.xaml"/>
+                    </ResourceDictionary.MergedDictionaries>
+
+                    <Style x:Key="PrintheadTabControlImageStyle" TargetType="{x:Type Image}" BasedOn="{StaticResource ThematicControlImage}">
+                        <Setter Property="Source" Value="/Resources/General/Printhead.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding PrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Motorized}">
+                                <Setter Property="Source" Value="/Resources/General/MotorizedPrinthead.png"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding PrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Valve}">
+                                <Setter Property="Source" Value="/Resources/General/ValvePrinthead.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ResourceDictionary>
+            </TabControl.Resources>
+            
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                Height="{DynamicResource StandardControlHeight}">
+                        <Image Style="{StaticResource PrintheadTabControlImageStyle}"
+                               Width="{DynamicResource NarrowControlWidth}"
+                               Margin="0, 0, 0, 0"/>
+                        <TextBlock Text="{Binding Name}"
+                                   VerticalAlignment="Center"
+                                   Style="{DynamicResource ThematicTabControlTextBlock}"
+                                   Margin="0, 0, 0, 0"/>
+                    </StackPanel>
+                    
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                        
+                    <StackPanel Orientation="Vertical">
+                            
+                        <!--#region Select Z Axis-->
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"
+                                        Height="{DynamicResource StandardControlHeight}">
+                                <Image Source="/Resources/General/Axis.png"
+                                       Style="{DynamicResource ThematicControlImage}"
+                                       Width="{DynamicResource NarrowControlWidth}"/>
+                                <TextBlock Text="Z Actuator"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Width="{DynamicResource StandardControlWidth}"/>
+                            </StackPanel>
+
+                            <ComboBox DisplayMemberPath="Name"
+                                      ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ZAxisViewModelList}"
+                                      SelectedValue="{Binding AttachedZAxisViewModel}"
+                                      Style="{DynamicResource ThematicComboBox}"
+                                      Height="{DynamicResource StandardControlHeight}" Width="{DynamicResource WideControlWidth}">
+                                <ComboBox.ToolTip>
+                                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                        The Z actuator this printhead is attached to.
+                                        <LineBreak/>
+                                        All operations done by this printhead will use this Z actuator for vertical movement.
+                                    </TextBlock>
+                                </ComboBox.ToolTip>
+                            </ComboBox>
+                        </StackPanel>
+                        <!--#endregion-->
+
+                        <!--#region Set Offset-->
+                        <StackPanel Orientation="Vertical">
+
+                            <!--X Offset-->
+                            <StackPanel Orientation="Horizontal"
+                                        Height="{DynamicResource StandardControlHeight}">
+                                <Image Source="/Resources/General/Offset.png"
+                                       Style="{DynamicResource ThematicControlImage}"
+                                       Width="{DynamicResource NarrowControlWidth}"/>
+                                <TextBlock Text="X Offset"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Width="{DynamicResource StandardControlWidth}"/>
+                                <TextBox Text="{Binding Path=XOffset, Mode=TwoWay}"
+                                         Style="{DynamicResource ThematicTextBox}"
+                                         Width="{DynamicResource WideControlWidth}">
+                                    <TextBox.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            The X axis distance from some arbitrary origin that this printhead is located.
+                                            <LineBreak/>
+                                            Offsets from all printheads must be set relative to the same origin.
+                                            <LineBreak/>
+                                            This parameter is intended to be automatically set during the calibration process. Only manually set these values if you are sure of what margin these values deviate.
+                                        </TextBlock>
+                                    </TextBox.ToolTip>
+                                </TextBox>
+                                <TextBlock Text="mm"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Width="{DynamicResource NarrowControlWidth}"/>
+                            </StackPanel>
+
+                            <!--Y Offset-->
+                            <StackPanel Orientation="Horizontal"
+                                        Height="{DynamicResource StandardControlHeight}">
+                                <Image Source="/Resources/General/Offset.png"
+                                       Style="{DynamicResource ThematicControlImage}"
+                                       Width="{DynamicResource NarrowControlWidth}"/>
+                                <TextBlock Text="Y Offset"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Width="{DynamicResource StandardControlWidth}"/>
+                                <TextBox Text="{Binding Path=YOffset, Mode=TwoWay}"
+                                         Style="{DynamicResource ThematicTextBox}"
+                                         Width="{DynamicResource WideControlWidth}">
+                                    <TextBox.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            The Y axis distance from some arbitrary origin that this printhead is located.
+                                            <LineBreak/>
+                                            Offsets from all printheads must be set relative to the same origin.
+                                            <LineBreak/>
+                                            This parameter is intended to be automatically set during the calibration process. Only manually set these values if you are sure of what margin these values deviate.
+                                        </TextBlock>
+                                    </TextBox.ToolTip>
+                                </TextBox>
+                                <TextBlock Text="mm"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Width="{DynamicResource NarrowControlWidth}"/>
+                            </StackPanel>
+                            
+                            <!--Z Offset-->
+                            <StackPanel Orientation="Horizontal"
+                                        Height="{DynamicResource StandardControlHeight}">
+                                <Image Source="/Resources/General/Offset.png"
+                                       Style="{DynamicResource ThematicControlImage}"
+                                       Width="{DynamicResource NarrowControlWidth}"/>
+                                <TextBlock Text="Z Offset"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Width="{DynamicResource StandardControlWidth}"/>
+                                <TextBox Text="{Binding Path=AttachedZAxisViewModel.MaxPosition, Mode=TwoWay}"
+                                         Style="{DynamicResource ThematicTextBox}"
+                                         Width="{DynamicResource WideControlWidth}">
+                                    <TextBox.ToolTip>
+                                        <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                            The Z axis distance from some arbitrary origin that this printhead is located.
+                                            <LineBreak/>
+                                            Offsets from all printheads must be set relative to the same origin.
+                                            <LineBreak/>
+                                            This parameter is intended to be automatically set during the calibration process. Only manually set these values if you are sure of what margin these values deviate.
+                                        </TextBlock>
+                                    </TextBox.ToolTip>
+                                </TextBox>
+                                <TextBlock Text="mm"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Width="{DynamicResource NarrowControlWidth}"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                        <!--#endregion-->
+                                    
+                        <!--#region Set Printhead Type & Parameters-->
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"
+                                        Height="{DynamicResource StandardControlHeight}">
+                                <Image Source="/Resources/General/Printhead.png"
+                                       Style="{DynamicResource ThematicControlImage}"
+                                       Width="{DynamicResource NarrowControlWidth}"/>
+                                <TextBlock Text="Printhead Type"
+                                           Style="{DynamicResource ThematicTextBlock}"
+                                           Width="{DynamicResource StandardControlWidth}"/>
+                            </StackPanel>
+
+                            <ComboBox ItemsSource="{Binding PrintheadTypeValues}"
+                                      SelectedItem="{Binding PrintheadType}" 
+                                      Style="{DynamicResource ThematicComboBox}"
+                                      Height="{DynamicResource StandardControlHeight}" Width="{DynamicResource WideControlWidth}">
+                                <ComboBox.ToolTip>
+                                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                        Is this a valve-based or motorized printhead?
+                                        <LineBreak/>
+                                        If you are following ModiPrint hardware guides, then the pneumatic extruder and microdispensing are considered valve printheads.
+                                        <LineBreak/>
+                                        Any printheads driven by a stepper motor will be considered motorized.
+                                    </TextBlock>
+                                </ComboBox.ToolTip>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <Grid>
+                            <Grid.Resources>
+                                <DataTemplate x:Key="UnsetPrintheadTypeTemplate"
+                                              DataType="{x:Type vPrintheadType:UnsetPrintheadTypeView}">
+                                    <vPrintheadType:UnsetPrintheadTypeView/>
+                                </DataTemplate>
+                                <DataTemplate x:Key="MotorizedPrintheadTypeTemplate"
+                                              DataType="{x:Type vmPrintheadType:MotorizedPrintheadTypeViewModel}">
+                                    <vPrintheadType:MotorizedPrintheadTypeView/>
+                                </DataTemplate>
+                                <DataTemplate x:Key="ValvePrintheadTypeTemplate"
+                                              DataType="{x:Type vmPrintheadType:ValvePrintheadTypeViewModel}">
+                                    <vPrintheadType:ValvePrintheadTypeView/>
+                                </DataTemplate>
+                                <DataTemplate x:Key="CustomPrintheadTypeTemplate"
+                                              DataType="{x:Type vmPrintheadType:CustomPrintheadTypeViewModel}">
+                                    <vPrintheadType:CustomPrintheadTypeView/>
+                                </DataTemplate>
+                            </Grid.Resources>
+                            
+                            <!--The Datacontext is set within the Usercontrols inside the Datatemplates-->
+                            <!--This prevents a really weird Databinding bug-->
+                            <ContentControl Content="{Binding }">
+                                <ContentControl.Style>
+                                    <Style TargetType="{x:Type ContentControl}">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource UnsetPrintheadTypeTemplate}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding PrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Motorized}">
+                                                <Setter Property="ContentTemplate" Value="{StaticResource MotorizedPrintheadTypeTemplate}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding PrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Valve}">
+                                                <Setter Property="ContentTemplate" Value="{StaticResource ValvePrintheadTypeTemplate}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding PrintheadType}" Value="{x:Static mPrintheadType:PrintheadType.Custom}">
+                                                <Setter Property="ContentTemplate" Value="{StaticResource CustomPrintheadTypeTemplate}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
+                        </Grid>
+                        <!--#endregion-->
+                                                        
+                        <!--#region Remove Printhead-->
+                        <Border Style="{DynamicResource ThematicButtonBorder}"
+                                HorizontalAlignment="Right"
+                                Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
+                                                     Path=DataContext.CanRemovePrinthead,
+                                                     Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+                                                      Path=DataContext.RemovePrintheadCommand}"
+                                    CommandParameter="{Binding Name}"
+                                    Style="{DynamicResource ThematicButton}"
+                                    Height="{DynamicResource StandardImageButtonHeight}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <StackPanel Orientation="Horizontal"
+                                                    Background="Transparent">
+                                            <Image Source="/Resources/Buttons/RemovePrinthead.png"
+                                                   Height="{DynamicResource StandardImageButtonHeight}"
+                                                   Style="{DynamicResource ThematicControlImage}"
+                                                   Margin="0, 0, 0, 0"/>
+                                            <StackPanel Orientation="Vertical"
+                                                        VerticalAlignment="Center"
+                                                        Margin="5, 5, 5, 5">
+                                                <TextBlock Text="Remove"
+                                                           Style="{DynamicResource ThematicTextBlock}"
+                                                           Margin="0, 0, 0, 0"/>
+                                                <TextBlock Text="Printhead"
+                                                           Style="{DynamicResource ThematicTextBlock}"
+                                                           Margin="0, 0, 0, 0"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <Button.ToolTip>
+                                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                                        Remove this printhead from the software. Note that parameters will not be saved.
+                                    </TextBlock>
+                                </Button.ToolTip>
+                            </Button>
+                        </Border>
+                        <!--#endregion-->
+
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+        <!--#endregion-->
+            
+    </StackPanel>
+</UserControl>

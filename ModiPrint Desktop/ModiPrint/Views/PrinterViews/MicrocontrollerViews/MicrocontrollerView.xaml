@@ -1,0 +1,488 @@
+﻿<UserControl x:Class="ModiPrint.Views.PrinterViews.MicrocontrollerViews.MicrocontrollerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ModiPrint"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:vMicrocontroller="clr-namespace:ModiPrint.Views.PrinterViews.MicrocontrollerViews"
+             xmlns:vm="clr-namespace:ModiPrint.ViewModels"
+             xmlns:vc="clr-namespace:ModiPrint.Utilities.IValueConverters"
+             mc:Ignorable="d"
+             Height="1196" Width="897"
+             Name="BaseUserControl">
+
+    <UserControl.Resources>
+        <System:Int32 x:Key="GPIOPinControlsColumnSpan">6</System:Int32>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <!--Image modified from https://ardubasic.files.wordpress.com/2014/04/arduino_mega_rev_3_bb.png-->
+            <ImageBrush ImageSource="/Resources/ArduinoMegaLayout.png"
+                        AlignmentX="Center" AlignmentY="Center"/>
+        </Grid.Background>
+
+        <!--#region 52 RowDefinitions 39 ColumnDefinitions-->
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <!--#endregion-->
+
+        <!--#region PWM Pins-->
+        <!--PWM 2-->
+        <vMicrocontroller:GPIOPinView Grid.Row="25" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[0]}"/>
+        
+        <!--PWM 3-->
+        <vMicrocontroller:GPIOPinView Grid.Row="24" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[1]}"/>
+
+        <!--PWM 4-->
+        <vMicrocontroller:GPIOPinView Grid.Row="23" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[2]}"/>
+
+        <!--PWM 5-->
+        <vMicrocontroller:GPIOPinView Grid.Row="22" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[3]}"/>
+
+        <!--PWM 6-->
+        <vMicrocontroller:GPIOPinView Grid.Row="21" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[4]}"/>
+
+        <!--PWM 7-->
+        <vMicrocontroller:GPIOPinView Grid.Row="20" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[5]}"/>
+
+        <!--PWM 8-->
+        <vMicrocontroller:GPIOPinView Grid.Row="17" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[6]}"/>
+        
+        <!--PWM 9-->
+        <vMicrocontroller:GPIOPinView Grid.Row="16" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[7]}"/>
+
+        <!--PWM 10-->
+        <vMicrocontroller:GPIOPinView Grid.Row="15" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[8]}"/>
+
+        <!--PWM 11-->
+        <vMicrocontroller:GPIOPinView Grid.Row="14" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[9]}"/>
+
+        <!--PWM 12-->
+        <vMicrocontroller:GPIOPinView Grid.Row="13" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[10]}"/>
+
+        <!--PWM 13-->
+        <vMicrocontroller:GPIOPinView Grid.Row="12" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[11]}"/>
+        <!--#endregion-->
+        
+        <!--#region Communication Pins-->
+        <!--Communication TX0 1-->
+        <vMicrocontroller:GPIOPinView Grid.Row="26" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[12]}"/>
+
+        <!--Communication RX0 2-->
+        <vMicrocontroller:GPIOPinView Grid.Row="27" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[13]}"/>
+
+        <!--Communication TX3 14-->
+        <vMicrocontroller:GPIOPinView Grid.Row="30" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[14]}"/>
+
+
+        <!--Communication RX3 15-->
+        <vMicrocontroller:GPIOPinView Grid.Row="31" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[15]}"/>
+
+        <!--Communication TX2 16-->
+        <vMicrocontroller:GPIOPinView Grid.Row="32" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[16]}"/>
+
+        <!--Communication RX2 17-->
+        <vMicrocontroller:GPIOPinView Grid.Row="33" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[17]}"/>
+
+        <!--Communication TX1 18-->
+        <vMicrocontroller:GPIOPinView Grid.Row="34" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[18]}"/>
+
+        <!--Communication RX1 19-->
+        <vMicrocontroller:GPIOPinView Grid.Row="35" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[19]}"/>
+
+        <!--Communication SDL 20-->
+        <vMicrocontroller:GPIOPinView Grid.Row="36" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[20]}"/>
+
+        <!--Communication SDA 21-->
+        <vMicrocontroller:GPIOPinView Grid.Row="37" Grid.Column="33"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[21]}"/>
+        <!--#endregion-->
+        
+        <!--#region Analog Pins-->
+        <!--Analog In A0-->
+        <vMicrocontroller:GPIOPinView Grid.Row="21" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[22]}"/>
+        
+        <!--Analog In A1-->
+        <vMicrocontroller:GPIOPinView Grid.Row="22" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[23]}"/>
+        
+        <!--Analog In A2-->
+        <vMicrocontroller:GPIOPinView Grid.Row="23" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[24]}"/>
+        
+        <!--Analog In A3-->
+        <vMicrocontroller:GPIOPinView Grid.Row="24" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[25]}"/>
+        
+        <!--Analog In A4-->
+        <vMicrocontroller:GPIOPinView Grid.Row="25" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[26]}"/>
+        
+        <!--Analog In A5-->
+        <vMicrocontroller:GPIOPinView Grid.Row="26" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[27]}"/>
+        
+
+        <!--Analog In A6-->
+        <vMicrocontroller:GPIOPinView Grid.Row="27" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[28]}"/>
+
+        <!--Analog In A7-->
+        <vMicrocontroller:GPIOPinView Grid.Row="28" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[29]}"/>
+
+        <!--Analog In A8-->
+        <vMicrocontroller:GPIOPinView Grid.Row="31" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[30]}"/>
+
+        <!--Analog In A9-->
+        <vMicrocontroller:GPIOPinView Grid.Row="32" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[31]}"/>
+
+        <!--Analog In A10-->
+        <vMicrocontroller:GPIOPinView Grid.Row="33" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[32]}"/>
+
+        <!--Analog In A11-->
+        <vMicrocontroller:GPIOPinView Grid.Row="34" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[33]}"/>
+
+        <!--Analog In A12-->
+        <vMicrocontroller:GPIOPinView Grid.Row="35" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[34]}"/>
+
+        <!--Analog In A13-->
+        <vMicrocontroller:GPIOPinView Grid.Row="36" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[35]}"/>
+
+        <!--Analog In A14-->
+        <vMicrocontroller:GPIOPinView Grid.Row="37" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[36]}"/>
+
+        <!--Analog In A15-->
+        <vMicrocontroller:GPIOPinView Grid.Row="38" Grid.Column="0"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[37]}"/>
+
+        <!--#endregion-->
+        
+        <!--#region Digital Pins-->
+        <!--Digital 22-->
+        <vMicrocontroller:GPIOPinView Grid.Row="39" Grid.Column="32"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[38]}"/>
+
+        <!--Digital 23-->
+        <vMicrocontroller:GPIOPinView Grid.Row="40" Grid.Column="32"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[39]}"/>
+
+        <!--Digital 24-->
+        <vMicrocontroller:GPIOPinView Grid.Row="41" Grid.Column="32"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[40]}"/>
+
+        <!--Digital 25-->
+        <vMicrocontroller:GPIOPinView Grid.Row="42" Grid.Column="32"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[41]}"/>
+
+        <!--Digital 26-->
+        <vMicrocontroller:GPIOPinView Grid.Row="43" Grid.Column="32"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[42]}"/>
+
+        <!--Digital 27-->
+        <vMicrocontroller:GPIOPinView Grid.Row="44" Grid.Column="32"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[43]}"/>
+
+        <!--Digital 28-->
+        <vMicrocontroller:GPIOPinView Grid.Row="45" Grid.Column="32"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[44]}"/>
+
+        <!--Digital 29-->
+        <vMicrocontroller:GPIOPinView Grid.Row="46" Grid.Column="32"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[45]}"/>
+
+        <!--Digital 30-->
+        <vMicrocontroller:GPIOPinView Grid.Row="44" Grid.Column="24"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[46]}"/>
+
+        <!--Digital 31-->
+        <vMicrocontroller:GPIOPinView Grid.Row="45" Grid.Column="24"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[47]}"/>
+
+        <!--Digital 32-->
+        <vMicrocontroller:GPIOPinView Grid.Row="46" Grid.Column="23"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[48]}"/>
+
+        <!--Digital 33-->
+        <vMicrocontroller:GPIOPinView Grid.Row="47" Grid.Column="23"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[49]}"/>
+            
+        <!--Digital 34-->
+        <vMicrocontroller:GPIOPinView Grid.Row="48" Grid.Column="22"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[50]}"/>
+
+        <!--Digital 35-->
+        <vMicrocontroller:GPIOPinView Grid.Row="49" Grid.Column="22"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[51]}"/>
+
+        <!--Digital 36-->
+        <vMicrocontroller:GPIOPinView Grid.Row="50" Grid.Column="21"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[52]}"/>
+
+        <!--Digital 37-->
+        <vMicrocontroller:GPIOPinView Grid.Row="51" Grid.Column="21"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[53]}"/>
+
+        <!--Digital 38-->
+        <vMicrocontroller:GPIOPinView Grid.Row="50" Grid.Column="14"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[54]}"/>
+
+        <!--Digital 39-->
+        <vMicrocontroller:GPIOPinView Grid.Row="51" Grid.Column="14"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[55]}"/>
+
+        <!--Digital 40-->
+        <vMicrocontroller:GPIOPinView Grid.Row="48" Grid.Column="13"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[56]}"/>
+
+        <!--Digital 41-->
+        <vMicrocontroller:GPIOPinView Grid.Row="49" Grid.Column="13"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[57]}"/>
+
+        <!--Digital 42-->
+        <vMicrocontroller:GPIOPinView Grid.Row="46" Grid.Column="12"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[58]}"/>
+
+        <!--Digital 43-->
+        <vMicrocontroller:GPIOPinView Grid.Row="47" Grid.Column="12"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[59]}"/>
+
+        <!--Digital 44-->
+        <vMicrocontroller:GPIOPinView Grid.Row="44" Grid.Column="11"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[60]}"/>
+
+        <!--Digital 45-->
+        <vMicrocontroller:GPIOPinView Grid.Row="45" Grid.Column="11"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[61]}"/>
+
+        <!--Digital 46-->
+        <vMicrocontroller:GPIOPinView Grid.Row="46" Grid.Column="1"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[62]}"/>
+
+        <!--Digital 47-->
+        <vMicrocontroller:GPIOPinView Grid.Row="47" Grid.Column="1"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[63]}"/>
+
+
+        <!--Digital 48-->
+        <vMicrocontroller:GPIOPinView Grid.Row="44" Grid.Column="1"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[64]}"/>
+
+        <!--Digital 49-->
+        <vMicrocontroller:GPIOPinView Grid.Row="45" Grid.Column="1"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[65]}"/>
+
+        <!--Digital 50-->
+        <vMicrocontroller:GPIOPinView Grid.Row="42" Grid.Column="1"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[66]}"/>
+
+        <!--Digital 51-->
+        <vMicrocontroller:GPIOPinView Grid.Row="43" Grid.Column="1"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[67]}"/>
+
+        <!--Digital 52-->
+        <vMicrocontroller:GPIOPinView Grid.Row="40" Grid.Column="1"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[68]}"/>
+
+        <!--Digital 53-->
+        <vMicrocontroller:GPIOPinView Grid.Row="41" Grid.Column="1"
+                                      Grid.ColumnSpan="{StaticResource GPIOPinControlsColumnSpan}"
+                                      DataContext="{Binding GPIOPinViewModelList[69]}"/>
+        <!--#endregion-->
+    
+    </Grid>
+</UserControl>

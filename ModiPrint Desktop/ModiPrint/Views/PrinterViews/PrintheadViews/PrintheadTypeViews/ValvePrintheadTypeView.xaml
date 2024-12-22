@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="ModiPrint.Views.PrinterViews.PrintheadViews.PrintheadTypeViews.ValvePrintheadTypeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:local="clr-namespace:ModiPrint.Views.PrinterViews.PrintheadViews.PrintheadTypeViews"
+             xmlns:vc="clr-namespace:ModiPrint.Utilities.IValueConverters"
+             xmlns:vControl="clr-namespace:ModiPrint.Views.ControlViews"
+             mc:Ignorable="d">
+
+    <!--The Datacontext is set inside this Usercontrol-->
+    <!--This prevents a really weird Databinding bug with Datatriggered Datatemplates-->
+    <UserControl.DataContext>
+        <Binding Path="PrintheadTypeViewModel"/>
+    </UserControl.DataContext>
+
+    <GroupBox Header="Valve Settings"
+              Style="{DynamicResource ThematicGroupBox}">
+        
+        <!--#region Set Valve Pin-->
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal"
+                        Height="{DynamicResource StandardControlHeight}">
+                <Image Source="/Resources/General/ValvePrinthead.png"
+                       Width="{DynamicResource NarrowControlWidth}"/>
+                <TextBlock Text="Valve Pin:"
+                           Width="{DynamicResource StandardControlWidth}"
+                           Style="{DynamicResource ThematicTextBlock}"/>
+            </StackPanel>
+            <ComboBox DisplayMemberPath="Name"
+                      ItemsSource="{Binding ValveGPIOPinViewModelList}"
+                      SelectedValue="{Binding AttachedValveGPIOPinViewModel}"
+                      Height="{DynamicResource StandardControlHeight}" Width="{DynamicResource WideControlWidth}"
+                      Style="{DynamicResource ThematicComboBox}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="DropDownOpened">
+                        <i:InvokeCommandAction Command="{Binding RefreshPinBySettingListCommand}"
+                                               CommandParameter="ValveGPIOPinViewModelList"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBox.ToolTip>
+                    <TextBlock Style="{DynamicResource ThematicToolTipTextBlock}">
+                            Pin ID for the Valve Pin of this actuator. 
+                            <LineBreak/>
+                            The Pin ID is physically marked on your Arduino MEGA. The wire connected to this GPIO Pin is also connected to "SIG" on your IRF520 MOS Driver.
+                    </TextBlock>
+                </ComboBox.ToolTip>
+            </ComboBox>
+
+            <Button Command="{Binding ClearGPIOPinCommand}"
+                    CommandParameter="AttachedValveGPIOPinViewModel"
+                    Height="{DynamicResource StandardControlHeight}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <vControl:OpaqueClickableImage x:Name="Image" Source="/Resources/ImageButtons/Clear.png"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Image" Property="Source"
+                                        Value="/Resources/ImageButtons/ClearMouseOver.png"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="Image" Property="Source"
+                                        Value="/Resources/ImageButtons/Clear.png"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+        <!--#endregion-->
+        
+    </GroupBox>
+</UserControl>
