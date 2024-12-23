@@ -6,7 +6,7 @@ ModiPrint is a powerful, modular, feature-rich open-source 3D bioprinter.
 <img src="https://github.com/user-attachments/assets/12fbc181-9fa4-485f-8ac8-c1951489baf3" width=50% height=50%>
 
 **High resolution Hydrogel Extrusion** 
-100 micron alginate filaments (500 micron scale bars
+100 micron alginate filaments (500 micron scale bars).
 <img src="https://github.com/user-attachments/assets/9b7df260-95c8-4b6c-99ac-b3e2596fca59" width=50% height=50%>
 
 **Multi-Material prints** 
