@@ -1,31 +1,31 @@
 # ModiPrint-Desktop
 
-##Introduction
+## Introduction
 
 ModiPrint is a powerful, modular, feature-rich open-source 3D bioprinter. 
 !{}[https://github.com/eshen2210/ModiPrint/blob/main/Readme%20Images/Bioprinter.jpg]
 
-![#High resolution Hydrogel Extrusion
+![# High resolution Hydrogel Extrusion
 100 micron alginate filaments (500 micron scale bars)]
-(https://github.com/eshen2210/ModiPrint/blob/main/Readme%20Images/Resolution.jpg)
+(/Readme%20Images/Resolution.jpg)
 
-![#Multi-Material prints
+![# Multi-Material prints
 Printheads mounted on independent Z-actuators enable multiple materials in one print.]
-(https://github.com/eshen2210/ModiPrint/blob/main/Readme%20Images/MultiMaterial.png)
+(/Readme%20Images/MultiMaterial.png)
 
-![#CAD Integration
+![# CAD Integration
 Integration with g-code allows complex 3D models to be fully realized in print.]
-(https://github.com/eshen2210/ModiPrint/blob/main/Readme%20Images/CAD Integration.png)
+(/Readme%20Images/CAD Integration.png)
 
-![#Gentle
+![# Gentle
 Human induced pluripotent stem cells remained viable for 30 days after print.]
-(https://github.com/eshen2210/ModiPrint/blob/main/Readme%20Images/Gentle.png)
+(/Readme%20Images/Gentle.png)
 
-![#Concentration Gradients
+![#C oncentration Gradients
 Our unique integration of extrusion and droplet printing allows you to embed gradients of small molecules into hydrogels of any geometry.]
-(https://github.com/eshen2210/ModiPrint/blob/main/Readme%20Images/Concentration Gradient.png)
+(/Readme%20Images/Concentration Gradient.png)
 
-##User Guide
+## User Guide
 
 This is the complete guide to building and operating ModiPrint. Construction and operation of this 
 bioprinter requires the user to: 
