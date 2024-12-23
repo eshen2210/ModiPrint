@@ -3,27 +3,22 @@
 ## Introduction
 
 ModiPrint is a powerful, modular, feature-rich open-source 3D bioprinter. 
-!{}[https://github.com/eshen2210/ModiPrint/blob/main/Readme%20Images/Bioprinter.jpg?raw=true]
+![Bioprinter](https://github.com/user-attachments/assets/12fbc181-9fa4-485f-8ac8-c1951489baf3)
 
-![# High resolution Hydrogel Extrusion%20
-100 micron alginate filaments (500 micron scale bars)]
-(/Readme%20Images/Resolution.jpg?raw=true)
+**High resolution Hydrogel Extrusion** 100 micron alginate filaments (500 micron scale bars
+![)](https://github.com/user-attachments/assets/9b7df260-95c8-4b6c-99ac-b3e2596fca59)
 
-![# Multi-Material prints%20
-Printheads mounted on independent Z-actuators enable multiple materials in one print.]
-(/Readme%20Images/MultiMaterial.png?raw=true)
+**Multi-Material prints** Printheads mounted on independent Z-actuators enable multiple materials in one print.
+![](https://github.com/user-attachments/assets/c0939015-344b-4d04-9177-de65bd38d852)
 
-![# CAD Integration%20
-Integration with g-code allows complex 3D models to be fully realized in print.]
-(/Readme%20Images/CAD Integration.png?raw=true)
+**CAD Integration** Integration with g-code allows complex 3D models to be fully realized in print.
+![](https://github.com/user-attachments/assets/7cc3282e-edc8-4b7d-a300-762ea35ecd75)
 
-![# Gentle%20
-Human induced pluripotent stem cells remained viable for 30 days after print.]
-(/Readme%20Images/Gentle.png?raw=true)
+**Gentle** Human induced pluripotent stem cells remained viable for 30 days after print.
+![](https://github.com/user-attachments/assets/a0da2b46-93c4-4f32-96f9-1dbadf1e5af5)
 
-![# Concentration Gradients%20
-Our unique integration of extrusion and droplet printing allows you to embed gradients of small molecules into hydrogels of any geometry.]
-(/Readme%20Images/Concentration Gradient.png?raw=true)
+**Concentration Gradients** Unique integration of extrusion and droplet printing allows you to embed gradients of small molecules into hydrogels of any geometry.
+![](https://github.com/user-attachments/assets/136fe2af-5725-4bb0-aeda-d3964f61fde4)
 
 ## User Guide
 
