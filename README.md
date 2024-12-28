@@ -23,7 +23,7 @@ Human induced pluripotent stem cells remained viable for 30 days after print.
 
 **Concentration Gradients** 
 Integration of extrusion and inkjet printing embeds small molecule gradients of into hydrogels of any geometry.
-<img src="https://github.com/user-attachments/assets/136fe2af-5725-4bb0-aeda-d3964f61fde4" width=50% height=50%>
+<img src="https://github.com/user-attachments/assets/136fe2af-5725-4bb0-aeda-d3964f61fde4" width=60% height=60%>
 
 ## User Guide
 
